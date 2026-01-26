@@ -28,32 +28,19 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const checkAdminStatus = async (email: string) => {
     try {
-      // Check admin status using the profiles table with email matching
+      // Check if the Firebase user's email exists in the firebase_admins table
       const { data, error } = await supabase
-        .from("profiles")
-        .select("role")
-        .eq("role", "admin")
-        .limit(1);
+        .from("firebase_admins")
+        .select("email")
+        .eq("email", email.toLowerCase())
+        .maybeSingle();
 
       if (error) {
         console.error("Error checking admin status:", error);
         return false;
       }
 
-      // For Firebase auth, we'll check if user exists in profiles as admin
-      // You can also create a firebase_admins table or use Firebase custom claims
-      const { data: adminData, error: adminError } = await supabase
-        .from("profiles")
-        .select("role, user_id")
-        .eq("role", "admin");
-
-      if (adminError) {
-        console.error("Error fetching admin profiles:", adminError);
-        return false;
-      }
-
-      // Check if any admin profile exists (for now, any authenticated Firebase user with admin role)
-      return adminData && adminData.length > 0;
+      return !!data;
     } catch (error) {
       console.error("Error checking admin status:", error);
       return false;
