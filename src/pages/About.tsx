@@ -106,10 +106,10 @@ const About = () => {
       </section>
 
       {/* Values Section */}
-      <section className="py-20 bg-primary text-primary-foreground">
+      <section className="py-10 md:py-20 bg-primary text-primary-foreground">
         <div className="container">
-          <h2 className="text-3xl font-display font-bold mb-12 text-center">Our Core Values</h2>
-          <div className="grid md:grid-cols-4 gap-8">
+          <h2 className="text-2xl md:text-3xl font-display font-bold mb-6 md:mb-12 text-center">Our Core Values</h2>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8">
             {[
               { title: "Quality", description: "Uncompromising standards in every product we deliver." },
               { title: "Innovation", description: "Continuously improving our designs and processes." },
@@ -117,11 +117,11 @@ const About = () => {
               { title: "Customer First", description: "Your satisfaction is our ultimate goal." },
             ].map((value, index) => (
               <div key={index} className="text-center">
-                <div className="w-16 h-16 rounded-full bg-secondary flex items-center justify-center mx-auto mb-4">
-                  <span className="text-2xl font-display font-bold text-secondary-foreground">{index + 1}</span>
+                <div className="w-10 h-10 md:w-16 md:h-16 rounded-full bg-secondary flex items-center justify-center mx-auto mb-2 md:mb-4">
+                  <span className="text-lg md:text-2xl font-display font-bold text-secondary-foreground">{index + 1}</span>
                 </div>
-                <h3 className="text-xl font-display font-semibold mb-2">{value.title}</h3>
-                <p className="text-primary-foreground/70 text-sm">{value.description}</p>
+                <h3 className="text-sm md:text-xl font-display font-semibold mb-1 md:mb-2">{value.title}</h3>
+                <p className="text-primary-foreground/70 text-[10px] md:text-sm leading-tight">{value.description}</p>
               </div>
             ))}
           </div>
