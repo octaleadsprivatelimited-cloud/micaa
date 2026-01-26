@@ -30,6 +30,10 @@ import AdminCategories from "./pages/admin/AdminCategories";
 import AdminProducts from "./pages/admin/AdminProducts";
 import AdminGallery from "./pages/admin/AdminGallery";
 import AdminMessages from "./pages/admin/AdminMessages";
+import AdminTestimonials from "./pages/admin/AdminTestimonials";
+import AdminBlog from "./pages/admin/AdminBlog";
+import AdminServices from "./pages/admin/AdminServices";
+import AdminFAQs from "./pages/admin/AdminFAQs";
 
 const queryClient = new QueryClient();
 
@@ -65,6 +69,10 @@ const App = () => (
                 <Route path="/admin/categories" element={<AdminCategories />} />
                 <Route path="/admin/products" element={<AdminProducts />} />
                 <Route path="/admin/gallery" element={<AdminGallery />} />
+                <Route path="/admin/testimonials" element={<AdminTestimonials />} />
+                <Route path="/admin/blog" element={<AdminBlog />} />
+                <Route path="/admin/services" element={<AdminServices />} />
+                <Route path="/admin/faqs" element={<AdminFAQs />} />
                 <Route path="/admin/messages" element={<AdminMessages />} />
               </Route>
             </Route>
