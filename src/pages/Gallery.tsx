@@ -4,6 +4,9 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { useGallery } from "@/hooks/useGallery";
 
+// Background images
+import bgGallery from "@/assets/bg-gallery.webp";
+
 const Gallery = () => {
   const { data: images, isLoading } = useGallery();
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
@@ -11,8 +14,13 @@ const Gallery = () => {
   return (
     <div className="flex flex-col">
       {/* Hero Section */}
-      <section className="py-16 bg-gradient-navy text-primary-foreground">
-        <div className="container">
+      <section className="py-16 relative overflow-hidden">
+        <div 
+          className="absolute inset-0 bg-cover bg-center"
+          style={{ backgroundImage: `url(${bgGallery})` }}
+        />
+        <div className="absolute inset-0 bg-primary/80" />
+        <div className="container relative z-10 text-primary-foreground">
           <h1 className="text-4xl md:text-5xl font-display font-bold mb-4">
             Gallery
           </h1>
@@ -23,8 +31,12 @@ const Gallery = () => {
       </section>
 
       {/* Gallery Grid */}
-      <section className="py-12">
-        <div className="container">
+      <section className="py-12 relative overflow-hidden">
+        <div 
+          className="absolute inset-0 bg-cover bg-center opacity-5"
+          style={{ backgroundImage: `url(${bgGallery})` }}
+        />
+        <div className="container relative z-10">
           {isLoading ? (
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
               {[1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
@@ -60,7 +72,7 @@ const Gallery = () => {
               ))}
             </div>
           ) : (
-            <Card className="p-12 text-center">
+            <Card className="p-12 text-center bg-card/95 backdrop-blur-sm">
               <p className="text-muted-foreground">
                 No gallery images yet. Check back soon for beautiful quartz installations!
               </p>
