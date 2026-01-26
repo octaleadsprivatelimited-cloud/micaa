@@ -65,17 +65,17 @@ const About = () => {
       {/* Stats Section */}
       <section className="py-16 bg-muted/30">
         <div className="container">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+          <div className="flex flex-wrap justify-center gap-6 md:gap-8 lg:gap-12">
             {stats.map((stat, index) => (
-              <Card key={index} className="text-center border-0 shadow-md">
-                <CardContent className="p-6">
-                  <div className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 text-primary mb-4">
-                    <stat.icon className="h-6 w-6" />
-                  </div>
-                  <div className="text-3xl font-display font-bold text-primary mb-1">{stat.value}</div>
-                  <div className="text-sm text-muted-foreground">{stat.label}</div>
-                </CardContent>
-              </Card>
+              <div key={index} className="flex items-center gap-3 px-4">
+                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 text-primary">
+                  <stat.icon className="h-6 w-6" />
+                </div>
+                <div>
+                  <div className="text-2xl md:text-3xl font-display font-bold text-primary">{stat.value}</div>
+                  <div className="text-xs md:text-sm text-muted-foreground whitespace-nowrap">{stat.label}</div>
+                </div>
+              </div>
             ))}
           </div>
         </div>
