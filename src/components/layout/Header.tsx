@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X, Phone, Mail, MapPin, Facebook, Instagram, Linkedin } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -8,9 +8,19 @@ import { cn } from "@/lib/utils";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
 
   const isActive = (path: string) => location.pathname === path;
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const menuVariants = {
     hidden: {
@@ -45,8 +55,13 @@ const Header = () => {
 
   return (
     <>
-      {/* Top Bar */}
-      <div className="bg-primary text-primary-foreground hidden md:block">
+      {/* Top Bar - Hides on scroll */}
+      <div
+        className={cn(
+          "bg-primary text-primary-foreground hidden md:block transition-all duration-300 overflow-hidden",
+          isScrolled ? "h-0 opacity-0" : "h-auto opacity-100"
+        )}
+      >
         <div className="container py-2">
           <div className="flex items-center justify-between text-xs">
             <div className="flex items-center gap-6">
