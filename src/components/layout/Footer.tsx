@@ -7,6 +7,7 @@ import { cn } from "@/lib/utils";
 
 // Logo
 import logo from "@/assets/logo.png";
+import bgFooter from "@/assets/bg-footer.png";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -66,8 +67,17 @@ const Footer = () => {
   };
 
   return (
-    <footer className="bg-primary text-primary-foreground">
-      <div className="container py-8 lg:py-12">
+    <footer
+      className="relative text-primary-foreground"
+      style={{
+        backgroundImage: `url(${bgFooter})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+      }}
+    >
+      {/* Overlay for readability */}
+      <div className="absolute inset-0 bg-primary/85" />
+      <div className="container py-8 lg:py-12 relative z-10">
         <div className="grid gap-4 lg:gap-8 lg:grid-cols-4">
           {/* Company Info - Always visible */}
           <div className="space-y-4 pb-4 lg:pb-0 border-b lg:border-b-0 border-primary-foreground/20">
