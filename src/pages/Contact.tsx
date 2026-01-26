@@ -81,28 +81,28 @@ const Contact = () => {
     }
   };
 
-  const contactInfo = [
+  const contactCards = [
     {
       icon: MapPin,
-      title: "Address",
+      title: "Our Office",
       content: COMPANY_INFO.address,
     },
     {
       icon: Phone,
-      title: "Phone",
+      title: "Phone Number",
       content: COMPANY_INFO.phone,
       link: `tel:${COMPANY_INFO.phone}`,
+    },
+    {
+      icon: Clock,
+      title: "Working Hours",
+      content: "Mon - Sat: 9:00 AM - 6:00 PM",
     },
     {
       icon: Mail,
       title: "Email",
       content: COMPANY_INFO.email,
       link: `mailto:${COMPANY_INFO.email}`,
-    },
-    {
-      icon: Clock,
-      title: "Working Hours",
-      content: "Mon - Sat: 9:00 AM - 6:00 PM",
     },
   ];
 
@@ -120,136 +120,117 @@ const Contact = () => {
         </div>
       </section>
 
-      {/* Contact Section */}
-      <section className="py-16">
+      {/* Contact Section - New Layout */}
+      <section className="py-16 bg-navy-dark">
         <div className="container">
-          <div className="grid lg:grid-cols-2 gap-12">
-            {/* Contact Form */}
-            <Card>
+          <div className="grid lg:grid-cols-2 gap-8 items-stretch">
+            {/* Left Side - Contact Info Cards (2x2 Grid) */}
+            <div className="grid grid-cols-2 gap-4">
+              {contactCards.map((card, index) => (
+                <Card key={index} className="bg-background border-0 shadow-lg hover:shadow-xl transition-shadow">
+                  <CardContent className="p-6 text-center flex flex-col items-center justify-center h-full min-h-[180px]">
+                    <div className="h-14 w-14 rounded-full bg-primary flex items-center justify-center mb-4">
+                      <card.icon className="h-7 w-7 text-primary-foreground" />
+                    </div>
+                    <h3 className="font-display font-semibold text-foreground mb-2">{card.title}</h3>
+                    {card.link ? (
+                      <a
+                        href={card.link}
+                        className="text-sm text-muted-foreground hover:text-primary transition-colors text-center leading-relaxed"
+                      >
+                        {card.content}
+                      </a>
+                    ) : (
+                      <p className="text-sm text-muted-foreground text-center leading-relaxed">{card.content}</p>
+                    )}
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+
+            {/* Right Side - Contact Form */}
+            <Card className="bg-primary border-0 shadow-xl">
               <CardContent className="p-8">
-                <h2 className="text-2xl font-display font-bold mb-6">Send us a Message</h2>
-                <form onSubmit={handleSubmit} className="space-y-6">
-                  <div className="grid sm:grid-cols-2 gap-4">
-                    <div className="space-y-2">
-                      <Label htmlFor="name">Name *</Label>
-                      <Input
-                        id="name"
-                        value={formData.name}
-                        onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                        required
-                        maxLength={100}
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="email">Email *</Label>
-                      <Input
-                        id="email"
-                        type="email"
-                        value={formData.email}
-                        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                        required
-                        maxLength={255}
-                      />
-                    </div>
+                <h2 className="text-2xl font-display font-bold mb-6 text-primary-foreground">
+                  Send us a Message
+                </h2>
+                <form onSubmit={handleSubmit} className="space-y-4">
+                  <div>
+                    <Input
+                      placeholder="Enter your Name"
+                      value={formData.name}
+                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                      required
+                      maxLength={100}
+                      className="bg-background border-0 h-12 text-foreground placeholder:text-muted-foreground"
+                    />
                   </div>
-                  <div className="grid sm:grid-cols-2 gap-4">
-                    <div className="space-y-2">
-                      <Label htmlFor="phone">Phone</Label>
-                      <Input
-                        id="phone"
-                        type="tel"
-                        value={formData.phone}
-                        onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                        maxLength={20}
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="subject">Subject</Label>
-                      <Input
-                        id="subject"
-                        value={formData.subject}
-                        onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
-                        maxLength={200}
-                      />
-                    </div>
+                  <div>
+                    <Input
+                      type="email"
+                      placeholder="Enter a valid email address"
+                      value={formData.email}
+                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                      required
+                      maxLength={255}
+                      className="bg-background border-0 h-12 text-foreground placeholder:text-muted-foreground"
+                    />
                   </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="message">Message *</Label>
+                  <div>
+                    <Input
+                      type="tel"
+                      placeholder="Enter your phone number (optional)"
+                      value={formData.phone}
+                      onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                      maxLength={20}
+                      className="bg-background border-0 h-12 text-foreground placeholder:text-muted-foreground"
+                    />
+                  </div>
+                  <div>
                     <Textarea
-                      id="message"
+                      placeholder="Enter your message"
                       rows={5}
                       value={formData.message}
                       onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                       required
                       maxLength={1000}
+                      className="bg-background border-0 text-foreground placeholder:text-muted-foreground resize-none"
                     />
                   </div>
-                  <Button type="submit" className="w-full" disabled={loading}>
-                    {loading ? "Sending..." : (
-                      <>
-                        <Send className="h-4 w-4 mr-2" />
-                        Send Message
-                      </>
-                    )}
+                  <Button 
+                    type="submit" 
+                    disabled={loading}
+                    className="bg-secondary text-secondary-foreground hover:bg-secondary/90 font-semibold px-8 h-12"
+                  >
+                    {loading ? "Sending..." : "SUBMIT"}
                   </Button>
                 </form>
               </CardContent>
             </Card>
+          </div>
 
-            {/* Contact Info */}
-            <div className="space-y-6">
-              <h2 className="text-2xl font-display font-bold">Get in Touch</h2>
-              <p className="text-muted-foreground">
-                Have questions about our products? Need a quote for your project? 
-                We're here to help. Reach out using any of the methods below.
-              </p>
-
-              <div className="space-y-4">
-                {contactInfo.map((info, index) => (
-                  <Card key={index}>
-                    <CardContent className="p-4 flex items-start gap-4">
-                      <div className="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
-                        <info.icon className="h-5 w-5 text-primary" />
-                      </div>
-                      <div>
-                        <h3 className="font-medium">{info.title}</h3>
-                        {info.link ? (
-                          <a
-                            href={info.link}
-                            className="text-muted-foreground hover:text-primary transition-colors"
-                          >
-                            {info.content}
-                          </a>
-                        ) : (
-                          <p className="text-muted-foreground">{info.content}</p>
-                        )}
-                      </div>
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
-
-              {/* WhatsApp CTA */}
-              <Card className="bg-[#25D366] text-white">
-                <CardContent className="p-6 text-center">
-                  <h3 className="font-display font-semibold text-lg mb-2">
+          {/* WhatsApp CTA */}
+          <div className="mt-8">
+            <Card className="bg-[#25D366] border-0">
+              <CardContent className="p-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+                <div className="text-center sm:text-left">
+                  <h3 className="font-display font-semibold text-lg text-white mb-1">
                     Prefer WhatsApp?
                   </h3>
-                  <p className="text-white/80 mb-4 text-sm">
+                  <p className="text-white/80 text-sm">
                     Chat with us instantly for quick responses.
                   </p>
-                  <Button
-                    asChild
-                    variant="secondary"
-                    className="bg-white text-[#25D366] hover:bg-white/90"
-                  >
-                    <a href={getWhatsAppLink()} target="_blank" rel="noopener noreferrer">
-                      Chat on WhatsApp
-                    </a>
-                  </Button>
-                </CardContent>
-              </Card>
-            </div>
+                </div>
+                <Button
+                  asChild
+                  className="bg-white text-[#25D366] hover:bg-white/90 font-semibold"
+                >
+                  <a href={getWhatsAppLink()} target="_blank" rel="noopener noreferrer">
+                    Chat on WhatsApp
+                  </a>
+                </Button>
+              </CardContent>
+            </Card>
           </div>
         </div>
       </section>
