@@ -68,9 +68,9 @@ const Header = () => {
         </Button>
       </div>
 
-      {/* Mobile Menu */}
+      {/* Mobile Menu - Overlay */}
       {isMenuOpen && (
-        <div className="lg:hidden border-t bg-background">
+        <div className="lg:hidden absolute top-16 left-0 right-0 z-50 border-t bg-background shadow-lg">
           <nav className="container py-4 flex flex-col gap-2">
             {NAV_LINKS.map((link) => (
               <Link
