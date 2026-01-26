@@ -136,7 +136,7 @@ const ProductDetail = () => {
                     Enquire on WhatsApp
                   </a>
                 </Button>
-                <Button asChild variant="outline" size="lg" className="flex-1">
+                <Button asChild variant="outline" size="lg" className="flex-1 border-2 border-primary text-primary hover:bg-primary hover:text-primary-foreground">
                   <Link to="/contact">Get Quote</Link>
                 </Button>
               </div>
@@ -160,7 +160,7 @@ const ProductDetail = () => {
 
               {/* PDF Download */}
               {product.pdf_url && (
-                <Button asChild variant="outline" className="w-full" size="lg">
+                <Button asChild variant="outline" className="w-full border-2 border-primary text-primary hover:bg-primary hover:text-primary-foreground" size="lg">
                   <a href={product.pdf_url} target="_blank" rel="noopener noreferrer">
                     <Download className="h-5 w-5 mr-2" />
                     Download Product Brochure (PDF)

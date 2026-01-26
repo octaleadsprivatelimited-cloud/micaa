@@ -139,12 +139,12 @@ const Home = () => {
               transition={{ delay: 0.5 }}
               className="flex flex-col sm:flex-row gap-4 justify-center pt-4"
             >
-              <Button asChild size="lg" className="bg-secondary text-secondary-foreground hover:bg-secondary/90">
+              <Button asChild size="lg" className="bg-secondary text-secondary-foreground hover:bg-secondary/90 font-semibold">
                 <Link to="/products">
                   Explore Products <ArrowRight className="ml-2 h-5 w-5" />
                 </Link>
               </Button>
-              <Button asChild size="lg" variant="outline" className="border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10">
+              <Button asChild size="lg" variant="outline" className="border-2 border-white/80 bg-transparent text-white hover:bg-white/20 font-semibold">
                 <Link to="/contact">Get Free Quote</Link>
               </Button>
             </motion.div>
@@ -307,14 +307,14 @@ const Home = () => {
             Contact us today for a free consultation and quote. Our experts are ready to help you choose the perfect quartz surface.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button asChild size="lg" className="bg-secondary text-secondary-foreground hover:bg-secondary/90">
+            <Button asChild size="lg" className="bg-secondary text-secondary-foreground hover:bg-secondary/90 font-semibold">
               <Link to="/contact">Request a Quote</Link>
             </Button>
             <Button
               asChild
               size="lg"
               variant="outline"
-              className="border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10"
+              className="border-2 border-white/80 bg-transparent text-white hover:bg-white/20 font-semibold"
             >
               <a href={`tel:${COMPANY_INFO.phone}`}>
                 Call Now: {COMPANY_INFO.phone}

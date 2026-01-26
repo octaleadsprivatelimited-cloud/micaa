@@ -153,6 +153,7 @@ const Products = () => {
               {(searchQuery || selectedCategory !== "all") && (
                 <Button
                   variant="outline"
+                  className="border-2 border-primary text-primary hover:bg-primary hover:text-primary-foreground"
                   onClick={() => {
                     setSearchQuery("");
                     setSelectedCategory("all");
