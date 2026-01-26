@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Eye, EyeOff, Lock } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -12,7 +12,7 @@ import { COMPANY_INFO } from "@/lib/constants";
 const AdminLogin = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
-  const { signIn, isAdmin, user } = useAuth();
+  const { signIn, isAdmin, user, loading: authLoading } = useAuth();
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
@@ -21,10 +21,11 @@ const AdminLogin = () => {
   });
 
   // If already logged in as admin, redirect to dashboard
-  if (user && isAdmin) {
-    navigate("/admin/dashboard");
-    return null;
-  }
+  useEffect(() => {
+    if (!authLoading && user && isAdmin) {
+      navigate("/admin/dashboard");
+    }
+  }, [user, isAdmin, authLoading, navigate]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
