@@ -67,7 +67,7 @@ const Footer = () => {
   };
 
   return (
-    <footer className="bg-[hsl(0,70%,45%)] text-primary-foreground">
+    <footer className="bg-primary text-primary-foreground">
       <div className="container py-8 lg:py-12">
         <div className="grid gap-4 lg:gap-8 lg:grid-cols-4">
           {/* Company Info - Always visible */}
