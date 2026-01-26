@@ -4,6 +4,7 @@ import { ArrowRight, Award, Shield, Sparkles, ChevronRight, ChevronLeft } from "
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { ParallaxBackground, ParallaxBackgroundSubtle } from "@/components/ui/parallax-background";
 import { useFeaturedProducts } from "@/hooks/useProducts";
 import { useTestimonials } from "@/hooks/useTestimonials";
 import { COMPANY_INFO, getProductWhatsAppMessage, getWhatsAppLink } from "@/lib/constants";
@@ -19,6 +20,7 @@ import bgFeatures from "@/assets/bg-features.webp";
 import bgProducts from "@/assets/bg-products.webp";
 import bgCta from "@/assets/bg-cta.webp";
 import bgTestimonials from "@/assets/bg-testimonials.webp";
+
 const heroSlides = [
   {
     image: heroQuartz1,
@@ -187,17 +189,11 @@ const Home = () => {
             />
           ))}
         </div>
-
-        
       </section>
 
       {/* Features Section */}
       <section className="py-20 relative overflow-hidden">
-        <div 
-          className="absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: `url(${bgFeatures})` }}
-        />
-        <div className="absolute inset-0 bg-background/90" />
+        <ParallaxBackgroundSubtle imageSrc={bgFeatures} overlay="bg-background/90" speed={0.2} />
         <div className="container relative z-10">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-display font-bold text-foreground mb-4">
@@ -225,11 +221,7 @@ const Home = () => {
 
       {/* Featured Products Section */}
       <section className="py-20 relative overflow-hidden">
-        <div 
-          className="absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: `url(${bgProducts})` }}
-        />
-        <div className="absolute inset-0 bg-background/95" />
+        <ParallaxBackgroundSubtle imageSrc={bgProducts} overlay="bg-background/95" speed={0.15} />
         <div className="container relative z-10">
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-12">
             <div>
@@ -314,11 +306,7 @@ const Home = () => {
 
       {/* CTA Section */}
       <section className="py-20 relative overflow-hidden">
-        <div 
-          className="absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: `url(${bgCta})` }}
-        />
-        <div className="absolute inset-0 bg-primary/85" />
+        <ParallaxBackground imageSrc={bgCta} overlay="bg-primary/85" speed={0.25} />
         <div className="container relative z-10 text-center text-primary-foreground">
           <h2 className="text-3xl md:text-4xl font-display font-bold mb-4">
             Ready to Transform Your Space?
@@ -347,11 +335,7 @@ const Home = () => {
       {/* Testimonials Preview */}
       {testimonials && testimonials.length > 0 && (
         <section className="py-20 relative overflow-hidden">
-          <div 
-            className="absolute inset-0 bg-cover bg-center"
-            style={{ backgroundImage: `url(${bgTestimonials})` }}
-          />
-          <div className="absolute inset-0 bg-background/92" />
+          <ParallaxBackgroundSubtle imageSrc={bgTestimonials} overlay="bg-background/92" speed={0.2} />
           <div className="container relative z-10">
             <div className="text-center mb-12">
               <h2 className="text-3xl font-display font-bold text-foreground mb-4">
