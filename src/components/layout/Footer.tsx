@@ -164,8 +164,9 @@ const Footer = () => {
             </ul>
           </CollapsibleSection>
 
-          {/* Contact Info - Collapsible on mobile */}
-          <CollapsibleSection title="Contact Us" sectionKey="contact">
+          {/* Contact Info - Always visible */}
+          <div>
+            <h3 className="font-display font-semibold mb-4 pt-3 lg:pt-0 border-t lg:border-t-0 border-primary-foreground/20">Contact Us</h3>
             <ul className="space-y-3">
               <li className="flex items-start gap-3">
                 <MapPin className="h-5 w-5 text-secondary shrink-0 mt-0.5" />
@@ -190,7 +191,7 @@ const Footer = () => {
                 </a>
               </li>
             </ul>
-          </CollapsibleSection>
+          </div>
         </div>
 
         <div className="mt-8 pt-6 border-t border-primary-foreground/20 flex flex-col md:flex-row justify-between items-center gap-2">
