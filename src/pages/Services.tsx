@@ -4,6 +4,10 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { useServices } from "@/hooks/useServices";
 
+// Background images
+import bgServices from "@/assets/bg-services.webp";
+import bgCta from "@/assets/bg-cta.webp";
+
 const iconMap: { [key: string]: any } = {
   Ruler,
   Truck,
@@ -60,8 +64,13 @@ const Services = () => {
   return (
     <div className="flex flex-col">
       {/* Hero Section */}
-      <section className="py-16 bg-gradient-navy text-primary-foreground">
-        <div className="container">
+      <section className="py-16 relative overflow-hidden">
+        <div 
+          className="absolute inset-0 bg-cover bg-center"
+          style={{ backgroundImage: `url(${bgServices})` }}
+        />
+        <div className="absolute inset-0 bg-primary/80" />
+        <div className="container relative z-10 text-primary-foreground">
           <h1 className="text-4xl md:text-5xl font-display font-bold mb-4">
             Our Services
           </h1>
@@ -72,13 +81,17 @@ const Services = () => {
       </section>
 
       {/* Services Grid */}
-      <section className="py-16">
-        <div className="container">
+      <section className="py-16 relative overflow-hidden">
+        <div 
+          className="absolute inset-0 bg-cover bg-center opacity-5"
+          style={{ backgroundImage: `url(${bgServices})` }}
+        />
+        <div className="container relative z-10">
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {(displayServices || defaultServices).map((service, index) => {
               const Icon = iconMap[(service as any).icon || "ShieldCheck"] || ShieldCheck;
               return (
-                <Card key={(service as any).id || index} className="hover:shadow-lg transition-shadow">
+                <Card key={(service as any).id || index} className="hover:shadow-lg transition-shadow bg-card/95 backdrop-blur-sm">
                   <CardContent className="p-8">
                     <div className="inline-flex h-14 w-14 items-center justify-center rounded-full bg-primary/10 text-primary mb-6">
                       <Icon className="h-7 w-7" />
@@ -108,8 +121,13 @@ const Services = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-16 bg-muted/30">
-        <div className="container text-center">
+      <section className="py-16 relative overflow-hidden">
+        <div 
+          className="absolute inset-0 bg-cover bg-center"
+          style={{ backgroundImage: `url(${bgCta})` }}
+        />
+        <div className="absolute inset-0 bg-muted/90" />
+        <div className="container relative z-10 text-center">
           <h2 className="text-3xl font-display font-bold mb-4">Need a Custom Solution?</h2>
           <p className="text-muted-foreground mb-8 max-w-2xl mx-auto">
             Our team is ready to help you with any special requirements or custom projects.

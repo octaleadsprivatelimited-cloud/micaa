@@ -6,6 +6,9 @@ import { Button } from "@/components/ui/button";
 import { useFAQs } from "@/hooks/useFAQs";
 import { cn } from "@/lib/utils";
 
+// Background images
+import bgFaq from "@/assets/bg-faq.webp";
+
 const faqCategories = [
   { id: "general", label: "General Questions" },
   { id: "products", label: "Products & Materials" },
@@ -96,8 +99,13 @@ const FAQ = () => {
   return (
     <div className="flex flex-col">
       {/* Hero Section */}
-      <section className="py-16 bg-gradient-navy text-primary-foreground">
-        <div className="container">
+      <section className="py-16 relative overflow-hidden">
+        <div 
+          className="absolute inset-0 bg-cover bg-center"
+          style={{ backgroundImage: `url(${bgFaq})` }}
+        />
+        <div className="absolute inset-0 bg-primary/80" />
+        <div className="container relative z-10 text-primary-foreground">
           <h1 className="text-4xl md:text-5xl font-display font-bold mb-4">
             Frequently Asked Questions
           </h1>
@@ -108,8 +116,13 @@ const FAQ = () => {
       </section>
 
       {/* FAQ Section - Two Column Layout */}
-      <section className="py-16 bg-gradient-to-br from-muted/30 via-background to-muted/50">
-        <div className="container">
+      <section className="py-16 relative overflow-hidden">
+        <div 
+          className="absolute inset-0 bg-cover bg-center opacity-5"
+          style={{ backgroundImage: `url(${bgFaq})` }}
+        />
+        <div className="absolute inset-0 bg-gradient-to-br from-muted/30 via-background to-muted/50" />
+        <div className="container relative z-10">
           <Card className="overflow-hidden border-0 shadow-xl bg-background/80 backdrop-blur-sm">
             <div className="grid lg:grid-cols-[280px_1fr]">
               {/* Left Side - Category Tabs */}

@@ -9,6 +9,9 @@ import { useProducts } from "@/hooks/useProducts";
 import { useCategories } from "@/hooks/useCategories";
 import { getProductWhatsAppMessage, getWhatsAppLink } from "@/lib/constants";
 
+// Background images
+import bgProducts from "@/assets/bg-products.webp";
+
 const Products = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
@@ -26,8 +29,13 @@ const Products = () => {
   return (
     <div className="flex flex-col">
       {/* Hero Section */}
-      <section className="py-16 bg-gradient-navy text-primary-foreground">
-        <div className="container">
+      <section className="py-16 relative overflow-hidden">
+        <div 
+          className="absolute inset-0 bg-cover bg-center"
+          style={{ backgroundImage: `url(${bgProducts})` }}
+        />
+        <div className="absolute inset-0 bg-primary/80" />
+        <div className="container relative z-10 text-primary-foreground">
           <h1 className="text-4xl md:text-5xl font-display font-bold mb-4">
             Our Products
           </h1>
@@ -38,8 +46,13 @@ const Products = () => {
       </section>
 
       {/* Filters */}
-      <section className="py-8 border-b bg-muted/30">
-        <div className="container">
+      <section className="py-8 border-b relative overflow-hidden">
+        <div 
+          className="absolute inset-0 bg-cover bg-center opacity-5"
+          style={{ backgroundImage: `url(${bgProducts})` }}
+        />
+        <div className="absolute inset-0 bg-muted/30" />
+        <div className="container relative z-10">
           <div className="flex flex-col md:flex-row gap-4">
             <div className="relative flex-1 max-w-md">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
@@ -47,11 +60,11 @@ const Products = () => {
                 placeholder="Search products..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-10"
+                className="pl-10 bg-background"
               />
             </div>
             <Select value={selectedCategory} onValueChange={setSelectedCategory}>
-              <SelectTrigger className="w-full md:w-[200px]">
+              <SelectTrigger className="w-full md:w-[200px] bg-background">
                 <Filter className="h-4 w-4 mr-2" />
                 <SelectValue placeholder="All Categories" />
               </SelectTrigger>
@@ -69,8 +82,12 @@ const Products = () => {
       </section>
 
       {/* Products Grid */}
-      <section className="py-12">
-        <div className="container">
+      <section className="py-12 relative overflow-hidden">
+        <div 
+          className="absolute inset-0 bg-cover bg-center opacity-3"
+          style={{ backgroundImage: `url(${bgProducts})` }}
+        />
+        <div className="container relative z-10">
           {productsLoading ? (
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
               {[1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
@@ -90,7 +107,7 @@ const Products = () => {
               </p>
               <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                 {filteredProducts.map((product) => (
-                  <Card key={product.id} className="overflow-hidden group hover:shadow-lg transition-shadow">
+                  <Card key={product.id} className="overflow-hidden group hover:shadow-lg transition-shadow bg-card/95 backdrop-blur-sm">
                     <div className="relative h-48 bg-muted overflow-hidden">
                       {product.images && product.images[0] ? (
                         <img
@@ -144,7 +161,7 @@ const Products = () => {
               </div>
             </>
           ) : (
-            <Card className="p-12 text-center">
+            <Card className="p-12 text-center bg-card/95 backdrop-blur-sm">
               <p className="text-muted-foreground mb-4">
                 {searchQuery || selectedCategory !== "all"
                   ? "No products match your search criteria."
