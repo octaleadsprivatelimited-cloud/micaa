@@ -80,26 +80,28 @@ const Home = () => {
     <div className="flex flex-col">
       {/* Hero Section with Slider */}
       <section className="relative min-h-[80vh] flex items-center justify-center overflow-hidden">
-        {/* Background Slider */}
-        <AnimatePresence mode="wait">
+        {/* Background Slider - All images stacked with opacity transitions */}
+        {heroSlides.map((slide, index) => (
           <motion.div
-            key={currentSlide}
-            initial={{ opacity: 0, scale: 1.1 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.7 }}
+            key={index}
+            initial={false}
+            animate={{
+              opacity: index === currentSlide ? 1 : 0,
+              scale: index === currentSlide ? 1 : 1.05,
+            }}
+            transition={{ duration: 0.8, ease: "easeInOut" }}
             className="absolute inset-0"
           >
             <img
-              src={heroSlides[currentSlide].image}
-              alt={heroSlides[currentSlide].title}
+              src={slide.image}
+              alt={slide.title}
               className="w-full h-full object-cover"
-              loading="eager"
-              fetchPriority="high"
+              loading={index === 0 ? "eager" : "lazy"}
+              fetchPriority={index === 0 ? "high" : "auto"}
             />
             <div className="absolute inset-0 bg-primary/70" />
           </motion.div>
-        </AnimatePresence>
+        ))}
 
         {/* Content */}
         <div className="container relative z-10 py-20 text-center text-primary-foreground">
