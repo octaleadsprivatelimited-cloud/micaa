@@ -7,7 +7,7 @@ import { COMPANY_INFO, NAV_LINKS } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 
 // Logo
-import logo from "@/assets/logo.jpeg";
+import logo from "@/assets/logo.png";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);

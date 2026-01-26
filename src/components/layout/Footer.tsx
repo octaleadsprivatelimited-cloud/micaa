@@ -5,6 +5,9 @@ import { motion, AnimatePresence } from "framer-motion";
 import { COMPANY_INFO, NAV_LINKS } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 
+// Logo
+import logo from "@/assets/logo.png";
+
 const Footer = () => {
   const currentYear = new Date().getFullYear();
   const [openSection, setOpenSection] = useState<string | null>(null);
@@ -68,10 +71,12 @@ const Footer = () => {
         <div className="grid gap-4 lg:gap-8 lg:grid-cols-4">
           {/* Company Info - Always visible */}
           <div className="space-y-4 pb-4 lg:pb-0 border-b lg:border-b-0 border-primary-foreground/20">
-            <div className="flex items-center gap-2">
-              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-secondary">
-                <span className="font-display text-xl font-bold text-secondary-foreground">S</span>
-              </div>
+            <div className="flex items-center gap-3">
+              <img 
+                src={logo} 
+                alt={COMPANY_INFO.name} 
+                className="h-12 w-12 object-contain"
+              />
               <div className="flex flex-col">
                 <span className="font-display text-lg font-bold">{COMPANY_INFO.name}</span>
                 <span className="text-xs text-primary-foreground/70">{COMPANY_INFO.tagline}</span>
