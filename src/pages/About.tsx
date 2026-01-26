@@ -2,6 +2,12 @@ import { Award, Users, Building, Globe } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { COMPANY_INFO } from "@/lib/constants";
 
+// Section background images
+import bgAboutHero from "@/assets/bg-about-hero.webp";
+import bgStory from "@/assets/bg-story.webp";
+import bgMission from "@/assets/bg-mission.webp";
+import bgValues from "@/assets/bg-values.webp";
+
 const About = () => {
   const stats = [
     { icon: Award, value: "15+", label: "Years of Excellence" },
@@ -13,8 +19,13 @@ const About = () => {
   return (
     <div className="flex flex-col">
       {/* Hero Section */}
-      <section className="py-20 bg-gradient-navy text-primary-foreground">
-        <div className="container">
+      <section className="py-20 relative overflow-hidden">
+        <div 
+          className="absolute inset-0 bg-cover bg-center"
+          style={{ backgroundImage: `url(${bgAboutHero})` }}
+        />
+        <div className="absolute inset-0 bg-primary/80" />
+        <div className="container relative z-10 text-primary-foreground">
           <div className="max-w-3xl">
             <h1 className="text-4xl md:text-5xl font-display font-bold mb-6">
               About {COMPANY_INFO.name}
@@ -27,8 +38,13 @@ const About = () => {
       </section>
 
       {/* Story Section */}
-      <section className="py-20">
-        <div className="container">
+      <section className="py-20 relative overflow-hidden">
+        <div 
+          className="absolute inset-0 bg-cover bg-center"
+          style={{ backgroundImage: `url(${bgStory})` }}
+        />
+        <div className="absolute inset-0 bg-background/95" />
+        <div className="container relative z-10">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
               <h2 className="text-3xl font-display font-bold mb-6">Our Story</h2>
@@ -82,10 +98,15 @@ const About = () => {
       </section>
 
       {/* Mission & Vision */}
-      <section className="py-20">
-        <div className="container">
+      <section className="py-20 relative overflow-hidden">
+        <div 
+          className="absolute inset-0 bg-cover bg-center"
+          style={{ backgroundImage: `url(${bgMission})` }}
+        />
+        <div className="absolute inset-0 bg-background/92" />
+        <div className="container relative z-10">
           <div className="grid md:grid-cols-2 gap-8">
-            <Card className="p-8 border-l-4 border-l-primary">
+            <Card className="p-8 border-l-4 border-l-primary bg-card/95 backdrop-blur-sm">
               <h3 className="text-2xl font-display font-bold mb-4">Our Mission</h3>
               <p className="text-muted-foreground">
                 To provide premium quality quartz surfaces that transform living and working spaces, 
@@ -93,7 +114,7 @@ const About = () => {
                 for architects, designers, and homeowners seeking excellence in surface solutions.
               </p>
             </Card>
-            <Card className="p-8 border-l-4 border-l-secondary">
+            <Card className="p-8 border-l-4 border-l-secondary bg-card/95 backdrop-blur-sm">
               <h3 className="text-2xl font-display font-bold mb-4">Our Vision</h3>
               <p className="text-muted-foreground">
                 To become the most trusted and innovative quartz surface provider in India, 
@@ -106,8 +127,13 @@ const About = () => {
       </section>
 
       {/* Values Section */}
-      <section className="py-10 md:py-20 bg-primary text-primary-foreground">
-        <div className="container">
+      <section className="py-10 md:py-20 relative overflow-hidden">
+        <div 
+          className="absolute inset-0 bg-cover bg-center"
+          style={{ backgroundImage: `url(${bgValues})` }}
+        />
+        <div className="absolute inset-0 bg-primary/85" />
+        <div className="container relative z-10 text-primary-foreground">
           <h2 className="text-2xl md:text-3xl font-display font-bold mb-6 md:mb-12 text-center">Our Core Values</h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8">
             {[
