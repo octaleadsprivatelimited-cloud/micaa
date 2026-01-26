@@ -1,16 +1,73 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
-import { Facebook, Instagram, Linkedin, Youtube, Mail, Phone, MapPin } from "lucide-react";
+import { Facebook, Instagram, Linkedin, Youtube, Mail, Phone, MapPin, ChevronDown } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 import { COMPANY_INFO, NAV_LINKS } from "@/lib/constants";
+import { cn } from "@/lib/utils";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
+  const [openSection, setOpenSection] = useState<string | null>(null);
+
+  const toggleSection = (section: string) => {
+    setOpenSection(openSection === section ? null : section);
+  };
+
+  const CollapsibleSection = ({
+    title,
+    children,
+    sectionKey,
+  }: {
+    title: string;
+    children: React.ReactNode;
+    sectionKey: string;
+  }) => {
+    const isOpen = openSection === sectionKey;
+
+    return (
+      <div className="lg:block">
+        {/* Mobile: Collapsible */}
+        <button
+          onClick={() => toggleSection(sectionKey)}
+          className="lg:hidden w-full flex items-center justify-between py-3 border-b border-primary-foreground/20"
+        >
+          <h3 className="font-display font-semibold">{title}</h3>
+          <ChevronDown
+            className={cn(
+              "h-4 w-4 transition-transform duration-200",
+              isOpen && "rotate-180"
+            )}
+          />
+        </button>
+        <AnimatePresence>
+          {isOpen && (
+            <motion.div
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: "auto", opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              className="lg:hidden overflow-hidden"
+            >
+              <div className="py-3">{children}</div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* Desktop: Always visible */}
+        <div className="hidden lg:block">
+          <h3 className="font-display font-semibold mb-4">{title}</h3>
+          {children}
+        </div>
+      </div>
+    );
+  };
 
   return (
     <footer className="bg-primary text-primary-foreground">
-      <div className="container py-12 lg:py-16">
-        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
-          {/* Company Info */}
-          <div className="space-y-4">
+      <div className="container py-8 lg:py-12">
+        <div className="grid gap-4 lg:gap-8 lg:grid-cols-4">
+          {/* Company Info - Always visible */}
+          <div className="space-y-4 pb-4 lg:pb-0 border-b lg:border-b-0 border-primary-foreground/20">
             <div className="flex items-center gap-2">
               <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-secondary">
                 <span className="font-display text-xl font-bold text-secondary-foreground">S</span>
@@ -20,7 +77,7 @@ const Footer = () => {
                 <span className="text-xs text-primary-foreground/70">{COMPANY_INFO.tagline}</span>
               </div>
             </div>
-            <p className="text-sm text-primary-foreground/80">
+            <p className="text-sm text-primary-foreground/80 hidden lg:block">
               Leading manufacturer and supplier of premium quartz surfaces for residential and commercial applications.
             </p>
             <div className="flex gap-4">
@@ -59,9 +116,8 @@ const Footer = () => {
             </div>
           </div>
 
-          {/* Quick Links */}
-          <div>
-            <h3 className="font-display font-semibold mb-4">Quick Links</h3>
+          {/* Quick Links - Collapsible on mobile */}
+          <CollapsibleSection title="Quick Links" sectionKey="quicklinks">
             <ul className="space-y-2">
               {NAV_LINKS.slice(0, 5).map((link) => (
                 <li key={link.path}>
@@ -74,11 +130,10 @@ const Footer = () => {
                 </li>
               ))}
             </ul>
-          </div>
+          </CollapsibleSection>
 
-          {/* More Links */}
-          <div>
-            <h3 className="font-display font-semibold mb-4">Resources</h3>
+          {/* Resources - Collapsible on mobile */}
+          <CollapsibleSection title="Resources" sectionKey="resources">
             <ul className="space-y-2">
               {NAV_LINKS.slice(5).map((link) => (
                 <li key={link.path}>
@@ -107,11 +162,10 @@ const Footer = () => {
                 </Link>
               </li>
             </ul>
-          </div>
+          </CollapsibleSection>
 
-          {/* Contact Info */}
-          <div>
-            <h3 className="font-display font-semibold mb-4">Contact Us</h3>
+          {/* Contact Info - Collapsible on mobile */}
+          <CollapsibleSection title="Contact Us" sectionKey="contact">
             <ul className="space-y-3">
               <li className="flex items-start gap-3">
                 <MapPin className="h-5 w-5 text-secondary shrink-0 mt-0.5" />
@@ -136,15 +190,12 @@ const Footer = () => {
                 </a>
               </li>
             </ul>
-          </div>
+          </CollapsibleSection>
         </div>
 
-        <div className="mt-12 pt-8 border-t border-primary-foreground/20 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-sm text-primary-foreground/60">
+        <div className="mt-8 pt-6 border-t border-primary-foreground/20 flex flex-col md:flex-row justify-between items-center gap-2">
+          <p className="text-xs text-primary-foreground/60">
             © {currentYear} {COMPANY_INFO.name}. All rights reserved.
-          </p>
-          <p className="text-sm text-primary-foreground/60">
-            Crafted with excellence for premium quartz solutions.
           </p>
         </div>
       </div>
