@@ -76,7 +76,7 @@ const Footer = () => {
       }}
     >
       {/* Overlay for readability */}
-      <div className="absolute inset-0 bg-primary/85" />
+      <div className="absolute inset-0 bg-[hsl(39,100%,50%)]/85" />
       <div className="container py-8 lg:py-12 relative z-10">
         <div className="grid gap-4 lg:gap-8 lg:grid-cols-4">
           {/* Company Info - Always visible */}
