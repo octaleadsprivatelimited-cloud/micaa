@@ -1,14 +1,62 @@
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { ArrowRight, Award, Shield, Sparkles, ChevronRight } from "lucide-react";
+import { ArrowRight, Award, Shield, Sparkles, ChevronRight, ChevronLeft } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { useFeaturedProducts } from "@/hooks/useProducts";
 import { useTestimonials } from "@/hooks/useTestimonials";
 import { COMPANY_INFO, getProductWhatsAppMessage, getWhatsAppLink } from "@/lib/constants";
 
+// Hero images
+import heroQuartz1 from "@/assets/hero-quartz-1.webp";
+import heroQuartz2 from "@/assets/hero-quartz-2.webp";
+import heroQuartz3 from "@/assets/hero-quartz-3.webp";
+import heroQuartz4 from "@/assets/hero-quartz-4.webp";
+
+const heroSlides = [
+  {
+    image: heroQuartz1,
+    title: "Premium White Quartz",
+    subtitle: "Elegant marble-like surfaces for modern kitchens",
+  },
+  {
+    image: heroQuartz2,
+    title: "Natural Quartz Crystal",
+    subtitle: "Stunning blue and gold mineral textures",
+  },
+  {
+    image: heroQuartz3,
+    title: "Grey Marble Quartz",
+    subtitle: "Sophisticated veining for luxury interiors",
+  },
+  {
+    image: heroQuartz4,
+    title: "Black & Gold Quartz",
+    subtitle: "Premium engineered stone with dramatic appeal",
+  },
+];
+
 const Home = () => {
   const { data: featuredProducts, isLoading: productsLoading } = useFeaturedProducts();
   const { data: testimonials, isLoading: testimonialsLoading } = useTestimonials();
+  const [currentSlide, setCurrentSlide] = useState(0);
+
+  // Auto-advance slider
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % heroSlides.length);
+    }, 5000);
+    return () => clearInterval(timer);
+  }, []);
+
+  const nextSlide = () => {
+    setCurrentSlide((prev) => (prev + 1) % heroSlides.length);
+  };
+
+  const prevSlide = () => {
+    setCurrentSlide((prev) => (prev - 1 + heroSlides.length) % heroSlides.length);
+  };
 
   const features = [
     {
@@ -30,22 +78,63 @@ const Home = () => {
 
   return (
     <div className="flex flex-col">
-      {/* Hero Section */}
-      <section className="relative min-h-[80vh] flex items-center justify-center bg-gradient-navy text-primary-foreground overflow-hidden">
-        <div className="absolute inset-0 bg-[url('/placeholder.svg')] bg-cover bg-center opacity-10" />
-        <div className="container relative z-10 py-20 text-center">
-          <div className="max-w-3xl mx-auto space-y-6 animate-fade-in">
-            <div className="inline-block px-4 py-1.5 rounded-full bg-secondary/20 text-secondary text-sm font-medium mb-4">
+      {/* Hero Section with Slider */}
+      <section className="relative min-h-[80vh] flex items-center justify-center overflow-hidden">
+        {/* Background Slider */}
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={currentSlide}
+            initial={{ opacity: 0, scale: 1.1 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.7 }}
+            className="absolute inset-0"
+          >
+            <img
+              src={heroSlides[currentSlide].image}
+              alt={heroSlides[currentSlide].title}
+              className="w-full h-full object-cover"
+            />
+            <div className="absolute inset-0 bg-primary/70" />
+          </motion.div>
+        </AnimatePresence>
+
+        {/* Content */}
+        <div className="container relative z-10 py-20 text-center text-primary-foreground">
+          <div className="max-w-3xl mx-auto space-y-6">
+            <motion.div
+              key={`badge-${currentSlide}`}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+              className="inline-block px-4 py-1.5 rounded-full bg-secondary/20 text-secondary text-sm font-medium mb-4"
+            >
               Premium Quartz Surfaces
-            </div>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold leading-tight">
-              Transform Your Space with <span className="text-secondary">Luxury Quartz</span>
-            </h1>
-            <p className="text-lg md:text-xl text-primary-foreground/80 max-w-2xl mx-auto">
-              Discover our premium collection of engineered quartz surfaces designed for modern living. 
-              Durable, beautiful, and crafted for perfection.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
+            </motion.div>
+            <motion.h1
+              key={`title-${currentSlide}`}
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3 }}
+              className="text-4xl md:text-5xl lg:text-6xl font-display font-bold leading-tight"
+            >
+              {heroSlides[currentSlide].title}
+            </motion.h1>
+            <motion.p
+              key={`subtitle-${currentSlide}`}
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4 }}
+              className="text-lg md:text-xl text-primary-foreground/80 max-w-2xl mx-auto"
+            >
+              {heroSlides[currentSlide].subtitle}
+            </motion.p>
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.5 }}
+              className="flex flex-col sm:flex-row gap-4 justify-center pt-4"
+            >
               <Button asChild size="lg" className="bg-secondary text-secondary-foreground hover:bg-secondary/90">
                 <Link to="/products">
                   Explore Products <ArrowRight className="ml-2 h-5 w-5" />
@@ -54,9 +143,42 @@ const Home = () => {
               <Button asChild size="lg" variant="outline" className="border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10">
                 <Link to="/contact">Get Free Quote</Link>
               </Button>
-            </div>
+            </motion.div>
           </div>
         </div>
+
+        {/* Slider Controls */}
+        <button
+          onClick={prevSlide}
+          className="absolute left-4 top-1/2 -translate-y-1/2 z-20 p-2 rounded-full bg-background/20 text-white hover:bg-background/40 transition-colors"
+          aria-label="Previous slide"
+        >
+          <ChevronLeft className="h-6 w-6" />
+        </button>
+        <button
+          onClick={nextSlide}
+          className="absolute right-4 top-1/2 -translate-y-1/2 z-20 p-2 rounded-full bg-background/20 text-white hover:bg-background/40 transition-colors"
+          aria-label="Next slide"
+        >
+          <ChevronRight className="h-6 w-6" />
+        </button>
+
+        {/* Slide Indicators */}
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex gap-2">
+          {heroSlides.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => setCurrentSlide(index)}
+              className={`w-3 h-3 rounded-full transition-all ${
+                index === currentSlide
+                  ? "bg-secondary w-8"
+                  : "bg-white/50 hover:bg-white/80"
+              }`}
+              aria-label={`Go to slide ${index + 1}`}
+            />
+          ))}
+        </div>
+
         <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-background to-transparent" />
       </section>
 
