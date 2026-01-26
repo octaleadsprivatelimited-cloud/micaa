@@ -63,17 +63,17 @@ const About = () => {
       </section>
 
       {/* Stats Section */}
-      <section className="py-16 bg-muted/30 overflow-x-auto">
+      <section className="py-12 bg-muted/30">
         <div className="container">
-          <div className="flex justify-between items-center min-w-max md:min-w-0 gap-4 md:gap-0">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
             {stats.map((stat, index) => (
-              <div key={index} className="flex items-center gap-3 px-2 md:px-4">
-                <div className="flex h-10 w-10 md:h-12 md:w-12 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary">
-                  <stat.icon className="h-5 w-5 md:h-6 md:w-6" />
+              <div key={index} className="flex items-center gap-2 md:gap-3">
+                <div className="flex h-8 w-8 md:h-10 md:w-10 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary">
+                  <stat.icon className="h-4 w-4 md:h-5 md:w-5" />
                 </div>
-                <div className="flex flex-col md:flex-row md:items-baseline md:gap-2">
-                  <span className="text-xl md:text-3xl font-display font-bold text-primary">{stat.value}</span>
-                  <span className="text-xs md:text-sm text-muted-foreground whitespace-nowrap">{stat.label}</span>
+                <div>
+                  <div className="text-lg md:text-2xl font-display font-bold text-primary leading-tight">{stat.value}</div>
+                  <div className="text-[10px] md:text-xs text-muted-foreground leading-tight">{stat.label}</div>
                 </div>
               </div>
             ))}
