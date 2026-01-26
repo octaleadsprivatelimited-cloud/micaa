@@ -1,5 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getAnalytics, isSupported } from "firebase/analytics";
+import { getStorage } from "firebase/storage";
 
 const firebaseConfig = {
   apiKey: "AIzaSyA4yfTDtFbbUw3SDV_Fmczqs2h-h_mb9a8",
@@ -14,6 +15,9 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 
+// Initialize Storage
+const storage = getStorage(app);
+
 // Initialize Analytics only if supported (not in SSR or unsupported browsers)
 let analytics: ReturnType<typeof getAnalytics> | null = null;
 
@@ -23,4 +27,4 @@ isSupported().then((supported) => {
   }
 });
 
-export { app, analytics };
+export { app, analytics, storage };
