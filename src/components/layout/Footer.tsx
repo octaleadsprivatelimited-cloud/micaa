@@ -204,6 +204,17 @@ const Footer = () => {
           <p className="text-xs text-primary-foreground/60">
             © {currentYear} {COMPANY_INFO.name}. All rights reserved.
           </p>
+          <p className="text-xs text-primary-foreground/60">
+            Developed by{" "}
+            <a
+              href="https://www.octaleads.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-secondary transition-colors"
+            >
+              Octaleads Pvt Ltd
+            </a>
+          </p>
         </div>
       </div>
     </footer>
