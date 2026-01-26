@@ -6,6 +6,9 @@ import { Button } from "@/components/ui/button";
 import { COMPANY_INFO, NAV_LINKS } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 
+// Logo
+import logo from "@/assets/logo.jpeg";
+
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -99,9 +102,11 @@ const Header = () => {
           <div className="flex h-16 items-center justify-between">
             {/* Logo */}
             <Link to="/" className="flex items-center gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded bg-primary">
-                <span className="font-display text-xl font-bold text-primary-foreground">S</span>
-              </div>
+              <img 
+                src={logo} 
+                alt={COMPANY_INFO.name} 
+                className="h-12 w-12 object-contain rounded"
+              />
               <div className="hidden sm:flex flex-col">
                 <span className="font-display text-xl font-bold text-foreground leading-tight">{COMPANY_INFO.name}</span>
                 <span className="text-[10px] text-muted-foreground uppercase tracking-wider">{COMPANY_INFO.tagline}</span>

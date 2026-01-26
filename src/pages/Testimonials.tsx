@@ -1,5 +1,9 @@
 import { Card } from "@/components/ui/card";
+import { ParallaxBackground, ParallaxBackgroundSubtle } from "@/components/ui/parallax-background";
 import { useTestimonials } from "@/hooks/useTestimonials";
+
+// Background images
+import bgTestimonials from "@/assets/bg-testimonials.webp";
 
 const Testimonials = () => {
   const { data: testimonials, isLoading } = useTestimonials();
@@ -7,8 +11,9 @@ const Testimonials = () => {
   return (
     <div className="flex flex-col">
       {/* Hero Section */}
-      <section className="py-16 bg-gradient-navy text-primary-foreground">
-        <div className="container">
+      <section className="py-16 relative overflow-hidden">
+        <ParallaxBackground imageSrc={bgTestimonials} overlay="bg-primary/80" speed={0.3} />
+        <div className="container relative z-10 text-primary-foreground">
           <h1 className="text-4xl md:text-5xl font-display font-bold mb-4">
             Customer Testimonials
           </h1>
@@ -19,8 +24,9 @@ const Testimonials = () => {
       </section>
 
       {/* Testimonials Grid */}
-      <section className="py-16">
-        <div className="container">
+      <section className="py-16 relative overflow-hidden">
+        <ParallaxBackgroundSubtle imageSrc={bgTestimonials} overlay="bg-background/95" speed={0.15} />
+        <div className="container relative z-10">
           {isLoading ? (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
               {[1, 2, 3, 4, 5, 6].map((i) => (
@@ -44,7 +50,7 @@ const Testimonials = () => {
           ) : testimonials && testimonials.length > 0 ? (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
               {testimonials.map((testimonial) => (
-                <Card key={testimonial.id} className="p-6 hover:shadow-lg transition-shadow">
+                <Card key={testimonial.id} className="p-6 hover:shadow-lg transition-shadow bg-card/95 backdrop-blur-sm">
                   <div className="flex gap-1 mb-4">
                     {[...Array(testimonial.rating || 5)].map((_, i) => (
                       <svg key={i} className="h-5 w-5 text-secondary fill-secondary" viewBox="0 0 20 20">
@@ -85,7 +91,7 @@ const Testimonials = () => {
               ))}
             </div>
           ) : (
-            <Card className="p-12 text-center">
+            <Card className="p-12 text-center bg-card/95 backdrop-blur-sm">
               <p className="text-muted-foreground">
                 No testimonials yet. Check back soon!
               </p>
