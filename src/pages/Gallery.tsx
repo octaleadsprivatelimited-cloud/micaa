@@ -2,6 +2,7 @@ import { useState } from "react";
 import { X } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { ParallaxBackground, ParallaxBackgroundSubtle } from "@/components/ui/parallax-background";
 import { useGallery } from "@/hooks/useGallery";
 
 // Background images
@@ -15,11 +16,7 @@ const Gallery = () => {
     <div className="flex flex-col">
       {/* Hero Section */}
       <section className="py-16 relative overflow-hidden">
-        <div 
-          className="absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: `url(${bgGallery})` }}
-        />
-        <div className="absolute inset-0 bg-primary/80" />
+        <ParallaxBackground imageSrc={bgGallery} overlay="bg-primary/80" speed={0.3} />
         <div className="container relative z-10 text-primary-foreground">
           <h1 className="text-4xl md:text-5xl font-display font-bold mb-4">
             Gallery
@@ -32,10 +29,7 @@ const Gallery = () => {
 
       {/* Gallery Grid */}
       <section className="py-12 relative overflow-hidden">
-        <div 
-          className="absolute inset-0 bg-cover bg-center opacity-5"
-          style={{ backgroundImage: `url(${bgGallery})` }}
-        />
+        <ParallaxBackgroundSubtle imageSrc={bgGallery} overlay="bg-background/95" speed={0.15} />
         <div className="container relative z-10">
           {isLoading ? (
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">

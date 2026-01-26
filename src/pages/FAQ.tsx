@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { ChevronRight, X } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { ParallaxBackground, ParallaxBackgroundSubtle } from "@/components/ui/parallax-background";
 import { useFAQs } from "@/hooks/useFAQs";
 import { cn } from "@/lib/utils";
 
@@ -100,11 +101,7 @@ const FAQ = () => {
     <div className="flex flex-col">
       {/* Hero Section */}
       <section className="py-16 relative overflow-hidden">
-        <div 
-          className="absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: `url(${bgFaq})` }}
-        />
-        <div className="absolute inset-0 bg-primary/80" />
+        <ParallaxBackground imageSrc={bgFaq} overlay="bg-primary/80" speed={0.3} />
         <div className="container relative z-10 text-primary-foreground">
           <h1 className="text-4xl md:text-5xl font-display font-bold mb-4">
             Frequently Asked Questions
@@ -117,11 +114,7 @@ const FAQ = () => {
 
       {/* FAQ Section - Two Column Layout */}
       <section className="py-16 relative overflow-hidden">
-        <div 
-          className="absolute inset-0 bg-cover bg-center opacity-5"
-          style={{ backgroundImage: `url(${bgFaq})` }}
-        />
-        <div className="absolute inset-0 bg-gradient-to-br from-muted/30 via-background to-muted/50" />
+        <ParallaxBackgroundSubtle imageSrc={bgFaq} overlay="bg-background/95" speed={0.15} />
         <div className="container relative z-10">
           <Card className="overflow-hidden border-0 shadow-xl bg-background/80 backdrop-blur-sm">
             <div className="grid lg:grid-cols-[280px_1fr]">

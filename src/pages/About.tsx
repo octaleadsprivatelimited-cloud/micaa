@@ -1,5 +1,6 @@
 import { Award, Users, Building, Globe } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
+import { ParallaxBackground, ParallaxBackgroundSubtle } from "@/components/ui/parallax-background";
 import { COMPANY_INFO } from "@/lib/constants";
 
 // Section background images
@@ -20,11 +21,7 @@ const About = () => {
     <div className="flex flex-col">
       {/* Hero Section */}
       <section className="py-20 relative overflow-hidden">
-        <div 
-          className="absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: `url(${bgAboutHero})` }}
-        />
-        <div className="absolute inset-0 bg-primary/80" />
+        <ParallaxBackground imageSrc={bgAboutHero} overlay="bg-primary/80" speed={0.3} />
         <div className="container relative z-10 text-primary-foreground">
           <div className="max-w-3xl">
             <h1 className="text-4xl md:text-5xl font-display font-bold mb-6">
@@ -39,11 +36,7 @@ const About = () => {
 
       {/* Story Section */}
       <section className="py-20 relative overflow-hidden">
-        <div 
-          className="absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: `url(${bgStory})` }}
-        />
-        <div className="absolute inset-0 bg-background/95" />
+        <ParallaxBackgroundSubtle imageSrc={bgStory} overlay="bg-background/95" speed={0.2} />
         <div className="container relative z-10">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
@@ -99,11 +92,7 @@ const About = () => {
 
       {/* Mission & Vision */}
       <section className="py-20 relative overflow-hidden">
-        <div 
-          className="absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: `url(${bgMission})` }}
-        />
-        <div className="absolute inset-0 bg-background/92" />
+        <ParallaxBackgroundSubtle imageSrc={bgMission} overlay="bg-background/92" speed={0.15} />
         <div className="container relative z-10">
           <div className="grid md:grid-cols-2 gap-8">
             <Card className="p-8 border-l-4 border-l-primary bg-card/95 backdrop-blur-sm">
@@ -128,11 +117,7 @@ const About = () => {
 
       {/* Values Section */}
       <section className="py-10 md:py-20 relative overflow-hidden">
-        <div 
-          className="absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: `url(${bgValues})` }}
-        />
-        <div className="absolute inset-0 bg-primary/85" />
+        <ParallaxBackground imageSrc={bgValues} overlay="bg-primary/85" speed={0.25} />
         <div className="container relative z-10 text-primary-foreground">
           <h2 className="text-2xl md:text-3xl font-display font-bold mb-6 md:mb-12 text-center">Our Core Values</h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8">

@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Label } from "@/components/ui/label";
+import { ParallaxBackground } from "@/components/ui/parallax-background";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { COMPANY_INFO, getWhatsAppLink } from "@/lib/constants";
@@ -113,11 +113,7 @@ const Contact = () => {
     <div className="flex flex-col">
       {/* Hero Section */}
       <section className="py-16 relative overflow-hidden">
-        <div 
-          className="absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: `url(${bgContact})` }}
-        />
-        <div className="absolute inset-0 bg-primary/80" />
+        <ParallaxBackground imageSrc={bgContact} overlay="bg-primary/80" speed={0.3} />
         <div className="container relative z-10 text-primary-foreground">
           <h1 className="text-4xl md:text-5xl font-display font-bold mb-4">
             Contact Us

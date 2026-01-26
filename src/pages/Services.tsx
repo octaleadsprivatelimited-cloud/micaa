@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { Ruler, Truck, Wrench, Palette, ShieldCheck, Clock } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { ParallaxBackground, ParallaxBackgroundSubtle } from "@/components/ui/parallax-background";
 import { useServices } from "@/hooks/useServices";
 
 // Background images
@@ -65,11 +66,7 @@ const Services = () => {
     <div className="flex flex-col">
       {/* Hero Section */}
       <section className="py-16 relative overflow-hidden">
-        <div 
-          className="absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: `url(${bgServices})` }}
-        />
-        <div className="absolute inset-0 bg-primary/80" />
+        <ParallaxBackground imageSrc={bgServices} overlay="bg-primary/80" speed={0.3} />
         <div className="container relative z-10 text-primary-foreground">
           <h1 className="text-4xl md:text-5xl font-display font-bold mb-4">
             Our Services
@@ -82,10 +79,7 @@ const Services = () => {
 
       {/* Services Grid */}
       <section className="py-16 relative overflow-hidden">
-        <div 
-          className="absolute inset-0 bg-cover bg-center opacity-5"
-          style={{ backgroundImage: `url(${bgServices})` }}
-        />
+        <ParallaxBackgroundSubtle imageSrc={bgServices} overlay="bg-background/95" speed={0.15} />
         <div className="container relative z-10">
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {(displayServices || defaultServices).map((service, index) => {
@@ -122,11 +116,7 @@ const Services = () => {
 
       {/* CTA Section */}
       <section className="py-16 relative overflow-hidden">
-        <div 
-          className="absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: `url(${bgCta})` }}
-        />
-        <div className="absolute inset-0 bg-muted/90" />
+        <ParallaxBackgroundSubtle imageSrc={bgCta} overlay="bg-muted/90" speed={0.2} />
         <div className="container relative z-10 text-center">
           <h2 className="text-3xl font-display font-bold mb-4">Need a Custom Solution?</h2>
           <p className="text-muted-foreground mb-8 max-w-2xl mx-auto">

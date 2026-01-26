@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { ParallaxBackground, ParallaxBackgroundSubtle } from "@/components/ui/parallax-background";
 import { useProducts } from "@/hooks/useProducts";
 import { useCategories } from "@/hooks/useCategories";
 import { getProductWhatsAppMessage, getWhatsAppLink } from "@/lib/constants";
@@ -30,11 +31,7 @@ const Products = () => {
     <div className="flex flex-col">
       {/* Hero Section */}
       <section className="py-16 relative overflow-hidden">
-        <div 
-          className="absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: `url(${bgProducts})` }}
-        />
-        <div className="absolute inset-0 bg-primary/80" />
+        <ParallaxBackground imageSrc={bgProducts} overlay="bg-primary/80" speed={0.3} />
         <div className="container relative z-10 text-primary-foreground">
           <h1 className="text-4xl md:text-5xl font-display font-bold mb-4">
             Our Products
@@ -47,10 +44,6 @@ const Products = () => {
 
       {/* Filters */}
       <section className="py-8 border-b relative overflow-hidden">
-        <div 
-          className="absolute inset-0 bg-cover bg-center opacity-5"
-          style={{ backgroundImage: `url(${bgProducts})` }}
-        />
         <div className="absolute inset-0 bg-muted/30" />
         <div className="container relative z-10">
           <div className="flex flex-col md:flex-row gap-4">
@@ -83,10 +76,7 @@ const Products = () => {
 
       {/* Products Grid */}
       <section className="py-12 relative overflow-hidden">
-        <div 
-          className="absolute inset-0 bg-cover bg-center opacity-3"
-          style={{ backgroundImage: `url(${bgProducts})` }}
-        />
+        <ParallaxBackgroundSubtle imageSrc={bgProducts} overlay="bg-background/97" speed={0.1} />
         <div className="container relative z-10">
           {productsLoading ? (
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
