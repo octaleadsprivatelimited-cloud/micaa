@@ -94,6 +94,8 @@ const Home = () => {
               src={heroSlides[currentSlide].image}
               alt={heroSlides[currentSlide].title}
               className="w-full h-full object-cover"
+              loading="eager"
+              fetchPriority="high"
             />
             <div className="absolute inset-0 bg-primary/70" />
           </motion.div>
