@@ -14,6 +14,11 @@ import heroQuartz2 from "@/assets/hero-quartz-2.webp";
 import heroQuartz3 from "@/assets/hero-quartz-3.webp";
 import heroQuartz4 from "@/assets/hero-quartz-4.webp";
 
+// Section background images
+import bgFeatures from "@/assets/bg-features.webp";
+import bgProducts from "@/assets/bg-products.webp";
+import bgCta from "@/assets/bg-cta.webp";
+import bgTestimonials from "@/assets/bg-testimonials.webp";
 const heroSlides = [
   {
     image: heroQuartz1,
@@ -187,8 +192,13 @@ const Home = () => {
       </section>
 
       {/* Features Section */}
-      <section className="py-20 bg-muted/30">
-        <div className="container">
+      <section className="py-20 relative overflow-hidden">
+        <div 
+          className="absolute inset-0 bg-cover bg-center"
+          style={{ backgroundImage: `url(${bgFeatures})` }}
+        />
+        <div className="absolute inset-0 bg-background/90" />
+        <div className="container relative z-10">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-display font-bold text-foreground mb-4">
               Why Choose {COMPANY_INFO.name}?
@@ -199,7 +209,7 @@ const Home = () => {
           </div>
           <div className="grid md:grid-cols-3 gap-8">
             {features.map((feature, index) => (
-              <Card key={index} className="border-0 shadow-lg hover:shadow-xl transition-shadow">
+              <Card key={index} className="border-0 shadow-lg hover:shadow-xl transition-shadow bg-card/95 backdrop-blur-sm">
                 <CardContent className="p-8 text-center">
                   <div className="inline-flex h-14 w-14 items-center justify-center rounded-full bg-primary/10 text-primary mb-6">
                     <feature.icon className="h-7 w-7" />
@@ -214,8 +224,13 @@ const Home = () => {
       </section>
 
       {/* Featured Products Section */}
-      <section className="py-20">
-        <div className="container">
+      <section className="py-20 relative overflow-hidden">
+        <div 
+          className="absolute inset-0 bg-cover bg-center"
+          style={{ backgroundImage: `url(${bgProducts})` }}
+        />
+        <div className="absolute inset-0 bg-background/95" />
+        <div className="container relative z-10">
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-12">
             <div>
               <h2 className="text-3xl font-display font-bold text-foreground mb-2">
@@ -290,7 +305,7 @@ const Home = () => {
               ))}
             </div>
           ) : (
-            <Card className="p-12 text-center">
+            <Card className="p-12 text-center bg-card/95 backdrop-blur-sm">
               <p className="text-muted-foreground">No featured products yet. Check back soon!</p>
             </Card>
           )}
@@ -298,8 +313,13 @@ const Home = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-primary text-primary-foreground">
-        <div className="container text-center">
+      <section className="py-20 relative overflow-hidden">
+        <div 
+          className="absolute inset-0 bg-cover bg-center"
+          style={{ backgroundImage: `url(${bgCta})` }}
+        />
+        <div className="absolute inset-0 bg-primary/85" />
+        <div className="container relative z-10 text-center text-primary-foreground">
           <h2 className="text-3xl md:text-4xl font-display font-bold mb-4">
             Ready to Transform Your Space?
           </h2>
@@ -326,8 +346,13 @@ const Home = () => {
 
       {/* Testimonials Preview */}
       {testimonials && testimonials.length > 0 && (
-        <section className="py-20 bg-muted/30">
-          <div className="container">
+        <section className="py-20 relative overflow-hidden">
+          <div 
+            className="absolute inset-0 bg-cover bg-center"
+            style={{ backgroundImage: `url(${bgTestimonials})` }}
+          />
+          <div className="absolute inset-0 bg-background/92" />
+          <div className="container relative z-10">
             <div className="text-center mb-12">
               <h2 className="text-3xl font-display font-bold text-foreground mb-4">
                 What Our Clients Say
@@ -338,7 +363,7 @@ const Home = () => {
             </div>
             <div className="grid md:grid-cols-3 gap-6">
               {testimonials.slice(0, 3).map((testimonial) => (
-                <Card key={testimonial.id} className="p-6">
+                <Card key={testimonial.id} className="p-6 bg-card/95 backdrop-blur-sm">
                   <div className="flex gap-1 mb-4">
                     {[...Array(testimonial.rating || 5)].map((_, i) => (
                       <svg key={i} className="h-5 w-5 text-secondary fill-secondary" viewBox="0 0 20 20">
@@ -372,7 +397,7 @@ const Home = () => {
               ))}
             </div>
             <div className="text-center mt-8">
-              <Button asChild variant="outline">
+              <Button asChild variant="outline" className="bg-card/80 backdrop-blur-sm">
                 <Link to="/testimonials">View All Testimonials</Link>
               </Button>
             </div>
