@@ -1,10 +1,10 @@
 export const COMPANY_INFO = {
   name: "SVN EXIM",
   tagline: "Premium Quartz Surfaces",
-  phone: "+91 8639132193",
+  phone: "+91 863 913 2193",
   whatsapp: "+918639132193",
-  email: "info@svnexim.com",
-  address: "Industrial Area, Hyderabad, Telangana, India",
+  email: "info@svnglobal.com",
+  address: "House No: 345B, Door No: 26-10/1/1208, Ward No: 26, Ground Floor, Padarupalli, Nellore, SPSR Nellore, Andhra Pradesh - 524004",
   socialLinks: {
     facebook: "https://facebook.com/svnexim",
     instagram: "https://instagram.com/svnexim",
