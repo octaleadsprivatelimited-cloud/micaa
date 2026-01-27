@@ -121,24 +121,6 @@ export type Database = {
         }
         Relationships: []
       }
-      firebase_admins: {
-        Row: {
-          created_at: string
-          email: string
-          id: string
-        }
-        Insert: {
-          created_at?: string
-          email: string
-          id?: string
-        }
-        Update: {
-          created_at?: string
-          email?: string
-          id?: string
-        }
-        Relationships: []
-      }
       gallery: {
         Row: {
           created_at: string

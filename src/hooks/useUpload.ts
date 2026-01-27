@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { supabase } from "@/integrations/supabase/client";
+import { ref, uploadBytes, getDownloadURL, deleteObject } from "firebase/storage";
+import { storage } from "@/lib/firebase";
 
 export const useUpload = () => {
   const [uploading, setUploading] = useState(false);
@@ -11,18 +12,11 @@ export const useUpload = () => {
       const fileExt = file.name.split(".").pop();
       const fileName = `${folder}/${Date.now()}-${Math.random().toString(36).substring(7)}.${fileExt}`;
 
-      const { error: uploadError } = await supabase.storage
-        .from("images")
-        .upload(fileName, file);
+      const storageRef = ref(storage, fileName);
+      await uploadBytes(storageRef, file);
+      const publicUrl = await getDownloadURL(storageRef);
 
-      if (uploadError) {
-        console.error("Error uploading image:", uploadError);
-        return null;
-      }
-
-      const { data } = supabase.storage.from("images").getPublicUrl(fileName);
-
-      return data.publicUrl;
+      return publicUrl;
     } catch (error) {
       console.error("Error uploading image:", error);
       return null;
@@ -33,21 +27,15 @@ export const useUpload = () => {
 
   const deleteImage = async (url: string): Promise<boolean> => {
     try {
-      // Extract file path from Supabase Storage URL
-      const urlObj = new URL(url);
-      const pathParts = urlObj.pathname.split("/storage/v1/object/public/images/");
-      
-      if (pathParts.length < 2) return false;
+      // Extract file path from Firebase Storage URL
+      const decodedUrl = decodeURIComponent(url);
+      const pathMatch = decodedUrl.match(/\/o\/(.+?)\?/);
+      if (!pathMatch || pathMatch.length < 2) return false;
 
-      const filePath = decodeURIComponent(pathParts[1]);
+      const filePath = pathMatch[1];
+      const storageRef = ref(storage, filePath);
 
-      const { error } = await supabase.storage.from("images").remove([filePath]);
-
-      if (error) {
-        console.error("Error deleting image:", error);
-        return false;
-      }
-
+      await deleteObject(storageRef);
       return true;
     } catch (error) {
       console.error("Error deleting image:", error);
