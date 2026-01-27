@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -39,11 +38,6 @@ import AdminFAQs from "./pages/admin/AdminFAQs";
 const queryClient = new QueryClient();
 
 const App = () => {
-  useEffect(() => {
-    // Dynamically import Firebase to avoid React duplicate issues
-    import("./lib/firebase").catch(console.error);
-  }, []);
-
   return (
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
