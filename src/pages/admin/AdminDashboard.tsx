@@ -1,14 +1,12 @@
-import { Package, Image, MessageSquare, FileText, Users, Eye } from "lucide-react";
+import { Package, MessageSquare, FileText, Users, Eye } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useProducts } from "@/hooks/useProducts";
-import { useGallery } from "@/hooks/useGallery";
 import { useContactMessages } from "@/hooks/useContactMessages";
 import { useAllBlogPosts } from "@/hooks/useBlogPosts";
 import { useTestimonials } from "@/hooks/useTestimonials";
 
 const AdminDashboard = () => {
   const { data: products } = useProducts();
-  const { data: gallery } = useGallery();
   const { data: messages } = useContactMessages();
   const { data: posts } = useAllBlogPosts();
   const { data: testimonials } = useTestimonials();
@@ -21,12 +19,6 @@ const AdminDashboard = () => {
       label: "Products",
       value: products?.length || 0,
       color: "bg-blue-500",
-    },
-    {
-      icon: Image,
-      label: "Gallery Images",
-      value: gallery?.length || 0,
-      color: "bg-green-500",
     },
     {
       icon: MessageSquare,
