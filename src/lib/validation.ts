@@ -72,11 +72,11 @@ export const validateGallery = (data: {
 }): ValidationResult => {
   const errors: Record<string, string> = {};
 
-  // Image URL validation
+  // Image URL validation (accepts both HTTP URLs and base64 data URLs)
   if (!data.image_url || data.image_url.trim().length === 0) {
     errors.image_url = "Image is required";
   } else {
-    const urlRegex = /^https?:\/\/.+/;
+    const urlRegex = /^(https?:\/\/.+|data:image\/.+;base64,.+)$/;
     if (!urlRegex.test(data.image_url)) {
       errors.image_url = "Please upload a valid image";
     }
@@ -141,9 +141,9 @@ export const validateBlogPost = (data: {
     errors.excerpt = "Excerpt must be less than 500 characters";
   }
 
-  // Cover image validation
+  // Cover image validation (accepts both HTTP URLs and base64 data URLs)
   if (data.cover_image && data.cover_image.trim().length > 0) {
-    const urlRegex = /^https?:\/\/.+/;
+    const urlRegex = /^(https?:\/\/.+|data:image\/.+;base64,.+)$/;
     if (!urlRegex.test(data.cover_image)) {
       errors.cover_image = "Please enter a valid image URL";
     }
