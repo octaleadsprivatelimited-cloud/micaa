@@ -1,7 +1,7 @@
 import { initializeApp } from "firebase/app";
 import { getAnalytics, isSupported } from "firebase/analytics";
-import { getStorage } from "firebase/storage";
 import { getAuth } from "firebase/auth";
+import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
   apiKey: "AIzaSyA4yfTDtFbbUw3SDV_Fmczqs2h-h_mb9a8",
@@ -19,8 +19,8 @@ const app = initializeApp(firebaseConfig);
 // Initialize Auth
 const auth = getAuth(app);
 
-// Initialize Storage
-const storage = getStorage(app);
+// Initialize Firestore
+const db = getFirestore(app);
 
 // Initialize Analytics only if supported (not in SSR or unsupported browsers)
 let analytics: ReturnType<typeof getAnalytics> | null = null;
@@ -31,4 +31,4 @@ isSupported().then((supported) => {
   }
 });
 
-export { app, auth, analytics, storage };
+export { app, auth, db, analytics };

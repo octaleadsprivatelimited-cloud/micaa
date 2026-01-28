@@ -1,7 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { User, onAuthStateChanged, signInWithEmailAndPassword, signOut as firebaseSignOut } from "firebase/auth";
 import { auth } from "@/lib/firebase";
-import { supabase } from "@/integrations/supabase/client";
 
 interface AuthContextType {
   user: User | null;
@@ -26,38 +25,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [isAdmin, setIsAdmin] = useState(false);
   const [loading, setLoading] = useState(true);
 
-  const checkAdminStatus = async (email: string) => {
-    try {
-      // Check if the email exists in the firebase_admins table
-      const { data, error } = await supabase
-        .from("firebase_admins")
-        .select("email")
-        .eq("email", email.toLowerCase())
-        .maybeSingle();
-
-      if (error) {
-        console.error("Error checking admin status:", error);
-        return false;
-      }
-
-      return !!data;
-    } catch (error) {
-      console.error("Error checking admin status:", error);
-      return false;
-    }
-  };
-
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
+    const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
       setUser(firebaseUser);
-
-      if (firebaseUser && firebaseUser.email) {
-        const adminStatus = await checkAdminStatus(firebaseUser.email);
-        setIsAdmin(adminStatus);
-      } else {
-        setIsAdmin(false);
-      }
-      
+      // Any authenticated Firebase user is considered an admin
+      setIsAdmin(!!firebaseUser);
       setLoading(false);
     });
 

@@ -93,11 +93,20 @@ const AdminCategories = () => {
       }
       setDialogOpen(false);
       resetForm();
-    } catch (error) {
+    } catch (error: any) {
       console.error("Error saving category:", error);
+      
+      let errorMessage = "Failed to save category. Please try again.";
+      
+      if (error?.code === "permission-denied") {
+        errorMessage = "Permission denied. Please make sure you're logged in and Firestore security rules are deployed. See QUICK-SETUP.md for instructions.";
+      } else if (error?.message) {
+        errorMessage = error.message;
+      }
+      
       toast({
         title: "Error",
-        description: "Failed to save category. Please try again.",
+        description: errorMessage,
         variant: "destructive",
       });
     }

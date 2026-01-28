@@ -26,6 +26,7 @@ import {
 import { useToast } from "@/hooks/use-toast";
 import { useGallery, useCreateGalleryImage, useUpdateGalleryImage, useDeleteGalleryImage } from "@/hooks/useGallery";
 import { useUpload } from "@/hooks/useUpload";
+import { validateGallery } from "@/lib/validation";
 
 const AdminGallery = () => {
   const { toast } = useToast();
@@ -74,17 +75,25 @@ const AdminGallery = () => {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    const url = await uploadImage(file, "gallery");
-    if (url) {
-      setFormData({ ...formData, image_url: url });
-      toast({
-        title: "Image Uploaded",
-        description: "Image uploaded successfully.",
-      });
-    } else {
+    try {
+      const url = await uploadImage(file, "gallery");
+      if (url) {
+        setFormData({ ...formData, image_url: url });
+        toast({
+          title: "Image Uploaded",
+          description: "Image uploaded successfully.",
+        });
+      } else {
+        toast({
+          title: "Upload Failed",
+          description: "Failed to upload image. Please try again.",
+          variant: "destructive",
+        });
+      }
+    } catch (error: any) {
       toast({
         title: "Upload Failed",
-        description: "Failed to upload image. Please try again.",
+        description: error.message || "Failed to upload image. Please try again.",
         variant: "destructive",
       });
     }
@@ -93,10 +102,18 @@ const AdminGallery = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!formData.image_url) {
+    // Validate form data
+    const validation = validateGallery({
+      image_url: formData.image_url,
+      title: formData.title,
+      description: formData.description,
+    });
+
+    if (!validation.valid) {
+      const firstError = Object.values(validation.errors)[0];
       toast({
-        title: "Error",
-        description: "Please upload an image.",
+        title: "Validation Error",
+        description: firstError,
         variant: "destructive",
       });
       return;

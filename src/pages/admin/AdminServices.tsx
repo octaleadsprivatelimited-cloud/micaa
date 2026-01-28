@@ -44,10 +44,9 @@ import {
   useUpdateService,
   useDeleteService,
 } from "@/hooks/useServices";
-import type { Tables } from "@/integrations/supabase/types";
 import * as LucideIcons from "lucide-react";
 
-type Service = Tables<"services">;
+import type { Service } from "@/hooks/useServices";
 
 const iconOptions = [
   "Wrench",

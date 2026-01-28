@@ -39,10 +39,8 @@ import {
   useDeleteBlogPost,
 } from "@/hooks/useBlogPosts";
 import { useUpload } from "@/hooks/useUpload";
-import type { Tables } from "@/integrations/supabase/types";
 import { format } from "date-fns";
-
-type BlogPost = Tables<"blog_posts">;
+import type { BlogPost } from "@/hooks/useBlogPosts";
 
 const AdminBlog = () => {
   const { toast } = useToast();

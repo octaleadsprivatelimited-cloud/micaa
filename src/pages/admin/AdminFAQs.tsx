@@ -37,9 +37,8 @@ import {
   useUpdateFAQ,
   useDeleteFAQ,
 } from "@/hooks/useFAQs";
-import type { Tables } from "@/integrations/supabase/types";
 
-type FAQ = Tables<"faqs">;
+import type { FAQ } from "@/hooks/useFAQs";
 
 const AdminFAQs = () => {
   const { toast } = useToast();

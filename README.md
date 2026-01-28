@@ -60,6 +60,24 @@ This project is built with:
 - shadcn-ui
 - Tailwind CSS
 
+## Firebase Backend
+
+This project uses **Firebase** as the backend:
+- **Firestore** for database (categories, products, gallery, blog, etc.)
+- **Firebase Storage** for image uploads
+- **Firebase Auth** for authentication
+
+### Firebase Setup
+
+**Important**: You must configure Firebase security rules before using the app.
+
+1. **Deploy Firestore Rules**: Copy `firestore.rules` to Firebase Console > Firestore Database > Rules
+2. **Create Admin Collection**: Create `firebase_admins` collection in Firestore with admin emails
+
+**Note**: Images are stored as base64 data URLs directly in Firestore - no separate storage service needed!
+
+See `QUICK-SETUP.md` for step-by-step instructions or `FIREBASE-SETUP.md` for detailed documentation.
+
 ## How can I deploy this project?
 
 Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.

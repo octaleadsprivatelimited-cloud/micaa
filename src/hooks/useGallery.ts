@@ -1,22 +1,46 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { supabase } from "@/integrations/supabase/client";
-import type { Tables, TablesInsert, TablesUpdate } from "@/integrations/supabase/types";
+import { 
+  collection, 
+  query, 
+  getDocs, 
+  addDoc, 
+  updateDoc, 
+  deleteDoc, 
+  doc, 
+  orderBy,
+  Timestamp 
+} from "firebase/firestore";
+import { db } from "@/lib/firebase";
 
-type GalleryImage = Tables<"gallery">;
-type GalleryInsert = TablesInsert<"gallery">;
-type GalleryUpdate = TablesUpdate<"gallery">;
+export interface GalleryImage {
+  id: string;
+  title?: string;
+  description?: string;
+  image_url: string;
+  display_order: number;
+  created_at: Date;
+}
+
+export interface GalleryImageInput {
+  title?: string;
+  description?: string;
+  image_url: string;
+  display_order?: number;
+}
 
 export const useGallery = () => {
   return useQuery({
     queryKey: ["gallery"],
     queryFn: async () => {
-      const { data, error } = await supabase
-        .from("gallery")
-        .select("*")
-        .order("display_order", { ascending: true });
-
-      if (error) throw error;
-      return data;
+      const galleryRef = collection(db, "gallery");
+      const q = query(galleryRef, orderBy("display_order", "asc"));
+      const querySnapshot = await getDocs(q);
+      
+      return querySnapshot.docs.map((docSnap) => ({
+        id: docSnap.id,
+        ...docSnap.data(),
+        created_at: docSnap.data().created_at?.toDate() || new Date(),
+      })) as GalleryImage[];
     },
   });
 };
@@ -25,15 +49,22 @@ export const useCreateGalleryImage = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async (image: GalleryInsert) => {
-      const { data, error } = await supabase
-        .from("gallery")
-        .insert(image)
-        .select()
-        .single();
-
-      if (error) throw error;
-      return data;
+    mutationFn: async (image: GalleryImageInput) => {
+      const galleryRef = collection(db, "gallery");
+      const docRef = await addDoc(galleryRef, {
+        ...image,
+        display_order: image.display_order || 0,
+        created_at: Timestamp.now(),
+      });
+      
+      const docSnap = await getDocs(query(collection(db, "gallery")));
+      const newDoc = docSnap.docs.find((d) => d.id === docRef.id);
+      
+      return {
+        id: docRef.id,
+        ...newDoc?.data(),
+        created_at: newDoc?.data()?.created_at?.toDate() || new Date(),
+      } as GalleryImage;
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["gallery"] });
@@ -45,16 +76,18 @@ export const useUpdateGalleryImage = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async ({ id, ...image }: GalleryUpdate & { id: string }) => {
-      const { data, error } = await supabase
-        .from("gallery")
-        .update(image)
-        .eq("id", id)
-        .select()
-        .single();
-
-      if (error) throw error;
-      return data;
+    mutationFn: async ({ id, ...image }: GalleryImageInput & { id: string }) => {
+      const imageRef = doc(db, "gallery", id);
+      await updateDoc(imageRef, image);
+      
+      const updatedDoc = await getDocs(query(collection(db, "gallery")));
+      const docData = updatedDoc.docs.find((d) => d.id === id);
+      
+      return {
+        id,
+        ...docData?.data(),
+        created_at: docData?.data()?.created_at?.toDate() || new Date(),
+      } as GalleryImage;
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["gallery"] });
@@ -67,12 +100,8 @@ export const useDeleteGalleryImage = () => {
 
   return useMutation({
     mutationFn: async (id: string) => {
-      const { error } = await supabase
-        .from("gallery")
-        .delete()
-        .eq("id", id);
-
-      if (error) throw error;
+      const imageRef = doc(db, "gallery", id);
+      await deleteDoc(imageRef);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["gallery"] });

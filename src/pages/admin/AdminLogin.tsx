@@ -38,6 +38,9 @@ const AdminLogin = () => {
         throw error;
       }
 
+      // Wait a moment for auth state to update
+      await new Promise(resolve => setTimeout(resolve, 100));
+
       toast({
         title: "Login Successful",
         description: "Welcome to the admin panel.",

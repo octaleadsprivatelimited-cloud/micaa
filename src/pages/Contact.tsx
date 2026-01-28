@@ -6,7 +6,8 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { ParallaxBackground } from "@/components/ui/parallax-background";
 import { useToast } from "@/hooks/use-toast";
-import { supabase } from "@/integrations/supabase/client";
+import { collection, addDoc, Timestamp } from "firebase/firestore";
+import { db } from "@/lib/firebase";
 import { COMPANY_INFO, getWhatsAppLink } from "@/lib/constants";
 import { z } from "zod";
 
@@ -48,17 +49,16 @@ const Contact = () => {
     setLoading(true);
 
     try {
-      const { error } = await supabase
-        .from("contact_messages")
-        .insert([{
-          name: result.data.name,
-          email: result.data.email,
-          phone: result.data.phone || null,
-          subject: result.data.subject || null,
-          message: result.data.message,
-        }]);
-
-      if (error) throw error;
+      const messagesRef = collection(db, "contact_messages");
+      await addDoc(messagesRef, {
+        name: result.data.name,
+        email: result.data.email,
+        phone: result.data.phone || null,
+        subject: result.data.subject || null,
+        message: result.data.message,
+        is_read: false,
+        created_at: Timestamp.now(),
+      });
 
       toast({
         title: "Message Sent!",

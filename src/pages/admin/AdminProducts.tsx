@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Plus, Pencil, Trash2, Upload } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -29,6 +29,7 @@ import { useToast } from "@/hooks/use-toast";
 import { useProducts, useCreateProduct, useUpdateProduct, useDeleteProduct } from "@/hooks/useProducts";
 import { useCategories } from "@/hooks/useCategories";
 import { useUpload } from "@/hooks/useUpload";
+import { validateProduct } from "@/lib/validation";
 
 const AdminProducts = () => {
   const { toast } = useToast();
@@ -55,6 +56,7 @@ const AdminProducts = () => {
     display_order: 0,
   });
   const [featureInput, setFeatureInput] = useState("");
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const resetForm = () => {
     setFormData({
@@ -96,13 +98,51 @@ const AdminProducts = () => {
 
   const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
-    if (!files) return;
+    if (!files || files.length === 0) return;
+
+    let successCount = 0;
+    let failCount = 0;
+    const errors: string[] = [];
 
     for (const file of Array.from(files)) {
-      const url = await uploadImage(file, "products");
-      if (url) {
-        setFormData((prev) => ({ ...prev, images: [...prev.images, url] }));
+      try {
+        const url = await uploadImage(file, "products");
+        if (url) {
+          setFormData((prev) => ({ ...prev, images: [...prev.images, url] }));
+          successCount++;
+        } else {
+          failCount++;
+          errors.push(`${file.name}: Upload failed`);
+        }
+      } catch (error: any) {
+        failCount++;
+        errors.push(`${file.name}: ${error.message || "Upload failed"}`);
       }
+    }
+
+    // Reset file input
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
+
+    // Show toast notifications
+    if (successCount > 0 && failCount === 0) {
+      toast({
+        title: "Images Uploaded",
+        description: `${successCount} image(s) uploaded successfully.`,
+      });
+    } else if (successCount > 0 && failCount > 0) {
+      toast({
+        title: "Partial Upload",
+        description: `${successCount} image(s) uploaded, ${failCount} failed. ${errors[0]}`,
+        variant: "destructive",
+      });
+    } else if (failCount > 0) {
+      toast({
+        title: "Upload Failed",
+        description: errors[0] || "Failed to upload image(s). Please try again.",
+        variant: "destructive",
+      });
     }
   };
 
@@ -133,10 +173,23 @@ const AdminProducts = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!formData.name.trim()) {
+    // Validate form data
+    const validation = validateProduct({
+      name: formData.name,
+      description: formData.description,
+      category_id: formData.category_id,
+      images: formData.images,
+      youtube_url: formData.youtube_url,
+      pdf_url: formData.pdf_url,
+      whatsapp_message: formData.whatsapp_message,
+    });
+
+    if (!validation.valid) {
+      // Show first error
+      const firstError = Object.values(validation.errors)[0];
       toast({
-        title: "Error",
-        description: "Product name is required.",
+        title: "Validation Error",
+        description: firstError,
         variant: "destructive",
       });
       return;
@@ -274,9 +327,14 @@ const AdminProducts = () => {
                       </button>
                     </div>
                   ))}
-                  <label className="w-20 h-20 border-2 border-dashed rounded flex items-center justify-center cursor-pointer hover:bg-muted/50">
-                    <Upload className="h-5 w-5 text-muted-foreground" />
+                  <label className="w-20 h-20 border-2 border-dashed rounded flex items-center justify-center cursor-pointer hover:bg-muted/50 transition-colors">
+                    {uploading ? (
+                      <span className="text-xs text-muted-foreground text-center px-2">Uploading...</span>
+                    ) : (
+                      <Upload className="h-5 w-5 text-muted-foreground" />
+                    )}
                     <input
+                      ref={fileInputRef}
                       type="file"
                       accept="image/*"
                       multiple

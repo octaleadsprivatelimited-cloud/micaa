@@ -39,9 +39,8 @@ import {
   useDeleteTestimonial,
 } from "@/hooks/useTestimonials";
 import { useUpload } from "@/hooks/useUpload";
-import type { Tables } from "@/integrations/supabase/types";
 
-type Testimonial = Tables<"testimonials">;
+import type { Testimonial } from "@/hooks/useTestimonials";
 
 const AdminTestimonials = () => {
   const { toast } = useToast();
