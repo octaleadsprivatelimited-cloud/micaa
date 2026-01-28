@@ -3,7 +3,6 @@ import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
 import {
   LayoutDashboard,
   Package,
-  Image,
   Users,
   FileText,
   MessageSquare,
@@ -25,7 +24,6 @@ const menuItems = [
   { icon: LayoutDashboard, label: "Dashboard", path: "/admin/dashboard" },
   { icon: Layers, label: "Categories", path: "/admin/categories" },
   { icon: Package, label: "Products", path: "/admin/products" },
-  { icon: Image, label: "Gallery", path: "/admin/gallery" },
   { icon: Star, label: "Testimonials", path: "/admin/testimonials" },
   { icon: FileText, label: "Blog Posts", path: "/admin/blog" },
   { icon: Wrench, label: "Services", path: "/admin/services" },

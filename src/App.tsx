@@ -29,7 +29,6 @@ import AdminLogin from "./pages/admin/AdminLogin";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import AdminCategories from "./pages/admin/AdminCategories";
 import AdminProducts from "./pages/admin/AdminProducts";
-import AdminGallery from "./pages/admin/AdminGallery";
 import AdminMessages from "./pages/admin/AdminMessages";
 import AdminTestimonials from "./pages/admin/AdminTestimonials";
 import AdminBlog from "./pages/admin/AdminBlog";
@@ -80,7 +79,6 @@ const App = () => {
                   <Route path="/admin/dashboard" element={<AdminDashboard />} />
                   <Route path="/admin/categories" element={<AdminCategories />} />
                   <Route path="/admin/products" element={<AdminProducts />} />
-                  <Route path="/admin/gallery" element={<AdminGallery />} />
                   <Route path="/admin/testimonials" element={<AdminTestimonials />} />
                   <Route path="/admin/blog" element={<AdminBlog />} />
                   <Route path="/admin/services" element={<AdminServices />} />
