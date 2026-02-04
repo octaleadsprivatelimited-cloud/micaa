@@ -38,6 +38,13 @@ type QuartzRequirement = {
   typeGrits: boolean;
   typePowder: boolean;
   typeHPQ: boolean;
+  typeGranularQuartz: boolean;
+  typeSemiGlassyQuartz: boolean;
+  typeGlassyQuartz: boolean;
+  typeSnowWhiteQuartz: boolean;
+  typeMilkyWhiteQuartz: boolean;
+  typeGreenQuartz: boolean;
+  typePinkQuartz: boolean;
   grade95: boolean;
   grade97: boolean;
   grade98: boolean;
@@ -51,6 +58,7 @@ type QuartzRequirement = {
   colorOther: boolean;
   colorOtherText: string;
   sizeSpecification: string;
+  ecElectricConductivity: string;
 };
 
 type ChemicalSpecs = {
@@ -60,6 +68,7 @@ type ChemicalSpecs = {
   tio2: string;
   cao: string;
   mgo: string;
+  ec: string;
 };
 
 type QuantityRequirement = {
@@ -123,6 +132,13 @@ const initialQuartz: QuartzRequirement = {
   typeGrits: false,
   typePowder: false,
   typeHPQ: false,
+  typeGranularQuartz: false,
+  typeSemiGlassyQuartz: false,
+  typeGlassyQuartz: false,
+  typeSnowWhiteQuartz: false,
+  typeMilkyWhiteQuartz: false,
+  typeGreenQuartz: false,
+  typePinkQuartz: false,
   grade95: false,
   grade97: false,
   grade98: false,
@@ -136,6 +152,7 @@ const initialQuartz: QuartzRequirement = {
   colorOther: false,
   colorOtherText: "",
   sizeSpecification: "",
+  ecElectricConductivity: "",
 };
 
 const initialChemical: ChemicalSpecs = {
@@ -145,6 +162,7 @@ const initialChemical: ChemicalSpecs = {
   tio2: "",
   cao: "",
   mgo: "",
+  ec: "",
 };
 
 const initialQuantity: QuantityRequirement = {
@@ -290,6 +308,15 @@ const Contact = () => {
         powder: quartz.typePowder,
         highPurityQuartzHPQ: quartz.typeHPQ,
       },
+      types: {
+        granularQuartz: quartz.typeGranularQuartz,
+        semiGlassyQuartz: quartz.typeSemiGlassyQuartz,
+        glassyQuartz: quartz.typeGlassyQuartz,
+        snowWhiteQuartz: quartz.typeSnowWhiteQuartz,
+        milkyWhiteQuartz: quartz.typeMilkyWhiteQuartz,
+        greenQuartz: quartz.typeGreenQuartz,
+        pinkQuartz: quartz.typePinkQuartz,
+      },
       gradePurity: {
         "95%": quartz.grade95,
         "97%": quartz.grade97,
@@ -305,6 +332,7 @@ const Contact = () => {
         other: quartz.colorOther ? quartz.colorOtherText : undefined,
       },
       sizeSpecification: quartz.sizeSpecification,
+      ecElectricConductivity: quartz.ecElectricConductivity || undefined,
     },
     section3_chemicalSpecifications: chemical,
     section4_quantityRequirement: {
@@ -497,6 +525,25 @@ const Contact = () => {
                           </div>
                         </div>
                         <div>
+                          <Label className="block mb-2">Types</Label>
+                          <div className="space-y-2">
+                            {[
+                              { key: "typeGranularQuartz" as const, label: "Granular Quartz" },
+                              { key: "typeSemiGlassyQuartz" as const, label: "Semi Glassy Quartz" },
+                              { key: "typeGlassyQuartz" as const, label: "Glassy Quartz" },
+                              { key: "typeSnowWhiteQuartz" as const, label: "Snow White Quartz" },
+                              { key: "typeMilkyWhiteQuartz" as const, label: "Milky White Quartz" },
+                              { key: "typeGreenQuartz" as const, label: "Green Quartz" },
+                              { key: "typePinkQuartz" as const, label: "Pink Quartz" },
+                            ].map(({ key, label }) => (
+                              <label key={key} className="flex items-center gap-2 cursor-pointer">
+                                <Checkbox checked={quartz[key]} onCheckedChange={(c) => updateQuartz(key, !!c)} />
+                                <span className="text-sm">{label}</span>
+                              </label>
+                            ))}
+                          </div>
+                        </div>
+                        <div>
                           <Label className="block mb-2">Grade / Purity (% SiO₂)</Label>
                           <div className="space-y-2">
                             {[
@@ -540,6 +587,10 @@ const Contact = () => {
                           <Label>Size Specification</Label>
                           <Input value={quartz.sizeSpecification} onChange={(e) => updateQuartz("sizeSpecification", e.target.value)} placeholder="Size Specification" className="mt-1" />
                         </div>
+                        <div>
+                          <Label>EC (Electric Conductivity)</Label>
+                          <Input value={quartz.ecElectricConductivity} onChange={(e) => updateQuartz("ecElectricConductivity", e.target.value)} placeholder="EC (Electric Conductivity)" className="mt-1" />
+                        </div>
                       </AccordionContent>
                     </AccordionItem>
 
@@ -565,6 +616,7 @@ const Contact = () => {
                                 { key: "tio2" as const, label: "TiO₂" },
                                 { key: "cao" as const, label: "CaO" },
                                 { key: "mgo" as const, label: "MgO" },
+                                { key: "ec" as const, label: "EC (Electric Conductivity)" },
                               ].map(({ key, label }) => (
                                 <tr key={key} className="border-b">
                                   <td className="py-2 pr-4">{label}</td>
