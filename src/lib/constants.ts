@@ -35,3 +35,16 @@ export const getWhatsAppLink = (message: string = DEFAULT_WHATSAPP_MESSAGE) => {
 export const getProductWhatsAppMessage = (productName: string) => {
   return `Hello SVN EXIM! I'm interested in the "${productName}" product. Please provide pricing and availability details.`;
 };
+
+/** Countries for Quartz Inquiry form (export/industrial buyers) */
+export const COUNTRIES = [
+  "Afghanistan", "Albania", "Algeria", "Argentina", "Australia", "Austria", "Bangladesh", "Belgium",
+  "Brazil", "Bulgaria", "Canada", "Chile", "China", "Colombia", "Croatia", "Czech Republic",
+  "Denmark", "Egypt", "Finland", "France", "Germany", "Greece", "Hong Kong", "Hungary",
+  "India", "Indonesia", "Iran", "Iraq", "Israel", "Italy", "Japan", "Jordan", "Kenya",
+  "Korea, South", "Kuwait", "Malaysia", "Mexico", "Netherlands", "New Zealand", "Nigeria",
+  "Norway", "Oman", "Pakistan", "Philippines", "Poland", "Portugal", "Qatar", "Romania",
+  "Russia", "Saudi Arabia", "Singapore", "South Africa", "Spain", "Sri Lanka", "Sweden",
+  "Switzerland", "Taiwan", "Thailand", "Turkey", "UAE", "UK", "Ukraine", "USA", "Vietnam",
+  "Other",
+];

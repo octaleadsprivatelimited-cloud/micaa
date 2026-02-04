@@ -69,5 +69,13 @@ service cloud.firestore {
       allow update: if isAuthenticated();
       allow delete: if isAuthenticated();
     }
+    
+    // Quartz Requirement Inquiries - public create, admin read/update/delete
+    match /quartz_inquiries/{inquiryId} {
+      allow read: if isAuthenticated();
+      allow create: if true; // Anyone can submit inquiry form
+      allow update: if isAuthenticated();
+      allow delete: if isAuthenticated();
+    }
   }
 }
