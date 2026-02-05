@@ -45,6 +45,7 @@ type QuartzRequirement = {
   typeMilkyWhiteQuartz: boolean;
   typeGreenQuartz: boolean;
   typePinkQuartz: boolean;
+  typeMicaQuartz: boolean;
   grade95: boolean;
   grade97: boolean;
   grade98: boolean;
@@ -139,6 +140,7 @@ const initialQuartz: QuartzRequirement = {
   typeMilkyWhiteQuartz: false,
   typeGreenQuartz: false,
   typePinkQuartz: false,
+  typeMicaQuartz: false,
   grade95: false,
   grade97: false,
   grade98: false,
@@ -316,6 +318,7 @@ const Contact = () => {
         milkyWhiteQuartz: quartz.typeMilkyWhiteQuartz,
         greenQuartz: quartz.typeGreenQuartz,
         pinkQuartz: quartz.typePinkQuartz,
+        micaQuartz: quartz.typeMicaQuartz,
       },
       gradePurity: {
         "95%": quartz.grade95,
@@ -535,6 +538,7 @@ const Contact = () => {
                               { key: "typeMilkyWhiteQuartz" as const, label: "Milky White Quartz" },
                               { key: "typeGreenQuartz" as const, label: "Green Quartz" },
                               { key: "typePinkQuartz" as const, label: "Pink Quartz" },
+                              { key: "typeMicaQuartz" as const, label: "Mica Quartz" },
                             ].map(({ key, label }) => (
                               <label key={key} className="flex items-center gap-2 cursor-pointer">
                                 <Checkbox checked={quartz[key]} onCheckedChange={(c) => updateQuartz(key, !!c)} />
