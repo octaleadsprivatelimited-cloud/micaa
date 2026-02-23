@@ -3,12 +3,8 @@ import { Link } from "react-router-dom";
 import { ChevronRight, X } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { ParallaxBackground, ParallaxBackgroundSubtle } from "@/components/ui/parallax-background";
 import { useFAQs } from "@/hooks/useFAQs";
 import { cn } from "@/lib/utils";
-
-// Background images
-import bgFaq from "@/assets/bg-faq.webp";
 
 const faqCategories = [
   { id: "general", label: "General Questions" },
@@ -100,21 +96,20 @@ const FAQ = () => {
   return (
     <div className="flex flex-col">
       {/* Hero Section */}
-      <section className="py-16 relative overflow-hidden">
-        <ParallaxBackground imageSrc={bgFaq} overlay="bg-primary/80" speed={0.3} />
-        <div className="container relative z-10 text-primary-foreground">
+      <section className="py-16 relative overflow-hidden bg-gradient-to-br from-primary via-primary/95 to-primary/90 text-primary-foreground">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_0%,hsl(var(--primary-foreground)/0.08),transparent)]" />
+        <div className="container relative z-10">
           <h1 className="text-4xl md:text-5xl font-display font-bold mb-4">
             Frequently Asked Questions
           </h1>
-          <p className="text-xl text-primary-foreground/80 max-w-2xl">
+          <p className="text-xl text-primary-foreground/90 max-w-2xl">
             Our platform is built to help you work smarter, not harder. It adapts to your needs and supports your goals. Make the most of every feature.
           </p>
         </div>
       </section>
 
       {/* FAQ Section - Two Column Layout */}
-      <section className="py-16 relative overflow-hidden">
-        <ParallaxBackgroundSubtle imageSrc={bgFaq} overlay="bg-background/95" speed={0.15} />
+      <section className="py-16 relative overflow-hidden bg-gradient-to-b from-background to-muted/20">
         <div className="container relative z-10">
           <Card className="overflow-hidden border-0 shadow-xl bg-background/80 backdrop-blur-sm">
             <div className="grid lg:grid-cols-[280px_1fr]">

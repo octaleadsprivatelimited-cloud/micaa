@@ -1,28 +1,23 @@
 import { COMPANY_INFO } from "@/lib/constants";
-import { ParallaxBackground, ParallaxBackgroundSubtle } from "@/components/ui/parallax-background";
-
-// Background images
-import bgPrivacy from "@/assets/bg-privacy.webp";
 
 const Privacy = () => {
   return (
     <div className="flex flex-col">
       {/* Hero Section */}
-      <section className="py-16 relative overflow-hidden">
-        <ParallaxBackground imageSrc={bgPrivacy} overlay="bg-primary/80" speed={0.3} />
-        <div className="container relative z-10 text-primary-foreground">
+      <section className="py-16 relative overflow-hidden bg-gradient-to-br from-primary via-primary/95 to-primary/90 text-primary-foreground">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_0%,hsl(var(--primary-foreground)/0.08),transparent)]" />
+        <div className="container relative z-10">
           <h1 className="text-4xl md:text-5xl font-display font-bold mb-4">
             Privacy Policy
           </h1>
-          <p className="text-primary-foreground/80">
+          <p className="text-primary-foreground/90">
             Last updated: January 2024
           </p>
         </div>
       </section>
 
       {/* Content */}
-      <section className="py-16 relative overflow-hidden">
-        <ParallaxBackgroundSubtle imageSrc={bgPrivacy} overlay="bg-background/97" speed={0.1} />
+      <section className="py-16 relative overflow-hidden bg-gradient-to-b from-background to-muted/20">
         <div className="container max-w-3xl relative z-10">
           <div className="prose prose-lg max-w-none">
             <h2 className="text-2xl font-display font-bold mt-8 mb-4">Introduction</h2>

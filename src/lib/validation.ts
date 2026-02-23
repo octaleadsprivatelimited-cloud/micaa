@@ -17,6 +17,7 @@ export const validateProduct = (data: {
   images?: string[];
   youtube_url?: string;
   pdf_url?: string;
+  test_report_url?: string;
   whatsapp_message?: string;
 }): ValidationResult => {
   const errors: Record<string, string> = {};
@@ -48,6 +49,14 @@ export const validateProduct = (data: {
     const urlRegex = /^https?:\/\/.+/;
     if (!urlRegex.test(data.pdf_url)) {
       errors.pdf_url = "Please enter a valid URL";
+    }
+  }
+
+  // Test report URL validation
+  if (data.test_report_url && data.test_report_url.trim().length > 0) {
+    const urlRegex = /^https?:\/\/.+/;
+    if (!urlRegex.test(data.test_report_url)) {
+      errors.test_report_url = "Please enter a valid URL";
     }
   }
 

@@ -36,6 +36,19 @@ export const getProductWhatsAppMessage = (productName: string) => {
   return `Hello SVN EXIM! I'm interested in the "${productName}" product. Please provide pricing and availability details.`;
 };
 
+/** Payment terms options for product enquiry */
+export const PAYMENT_TERMS_OPTIONS = [
+  { value: "advance_or_weighment", label: "Advance or weighment payment" },
+  { value: "100_advance", label: "100% advance" },
+] as const;
+
+export const getProductEnquiryWhatsAppMessage = (
+  productName: string,
+  paymentTermsLabel: string
+) => {
+  return `Hello SVN EXIM! I'm interested in the "${productName}" product. Payment terms: ${paymentTermsLabel}. Please provide pricing and availability details.`;
+};
+
 /** Countries for Quartz Inquiry form (export/industrial buyers) */
 export const COUNTRIES = [
   "Afghanistan", "Albania", "Algeria", "Argentina", "Australia", "Austria", "Bangladesh", "Belgium",

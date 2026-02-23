@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { ParallaxBackground, ParallaxBackgroundSubtle } from "@/components/ui/parallax-background";
-import { useFeaturedProducts } from "@/hooks/useProducts";
+import { useProducts } from "@/hooks/useProducts";
 import { useTestimonials } from "@/hooks/useTestimonials";
 import { COMPANY_INFO, getProductWhatsAppMessage, getWhatsAppLink } from "@/lib/constants";
 
@@ -17,9 +17,7 @@ import heroQuartz4 from "@/assets/hero-quartz-4.webp";
 
 // Section background images
 import bgFeatures from "@/assets/bg-features.webp";
-import bgProducts from "@/assets/bg-products.webp";
 import bgCta from "@/assets/bg-cta.webp";
-import bgTestimonials from "@/assets/bg-testimonials.webp";
 
 const heroSlides = [
   {
@@ -45,9 +43,10 @@ const heroSlides = [
 ];
 
 const Home = () => {
-  const { data: featuredProducts, isLoading: productsLoading } = useFeaturedProducts();
-  const { data: testimonials, isLoading: testimonialsLoading } = useTestimonials();
+  const { data: products, isLoading: productsLoading } = useProducts();
+  const { data: testimonials } = useTestimonials();
   const [currentSlide, setCurrentSlide] = useState(0);
+  const displayProducts = products?.slice(0, 6) ?? [];
 
   // Auto-advance slider
   useEffect(() => {
@@ -219,17 +218,16 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Featured Products Section */}
-      <section className="py-20 relative overflow-hidden">
-        <ParallaxBackgroundSubtle imageSrc={bgProducts} overlay="bg-background/95" speed={0.15} />
+      {/* Products Section */}
+      <section className="py-20 relative overflow-hidden bg-gradient-to-b from-background to-muted/20">
         <div className="container relative z-10">
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-12">
             <div>
               <h2 className="text-3xl font-display font-bold text-foreground mb-2">
-                Featured Products
+                Our Products
               </h2>
               <p className="text-muted-foreground">
-                Explore our most popular quartz surfaces.
+                Premium quartz surfaces for every application.
               </p>
             </div>
             <Button asChild variant="outline" className="mt-4 md:mt-0">
@@ -241,7 +239,7 @@ const Home = () => {
 
           {productsLoading ? (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {[1, 2, 3].map((i) => (
+              {[1, 2, 3, 4, 5, 6].map((i) => (
                 <Card key={i} className="overflow-hidden animate-pulse">
                   <div className="h-48 bg-muted" />
                   <CardContent className="p-6">
@@ -251,15 +249,16 @@ const Home = () => {
                 </Card>
               ))}
             </div>
-          ) : featuredProducts && featuredProducts.length > 0 ? (
+          ) : displayProducts.length > 0 ? (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {featuredProducts.map((product) => (
-                <Card key={product.id} className="overflow-hidden group hover:shadow-lg transition-shadow">
+              {displayProducts.map((product) => (
+                <Card key={product.id} className="overflow-hidden group hover:shadow-lg transition-shadow bg-card border shadow-sm">
                   <div className="relative h-48 bg-muted overflow-hidden">
                     {product.images && product.images[0] ? (
                       <img
                         src={product.images[0]}
                         alt={product.name}
+                        loading="lazy"
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                       />
                     ) : (
@@ -271,7 +270,7 @@ const Home = () => {
                   <CardContent className="p-6">
                     <h3 className="text-lg font-display font-semibold mb-2">{product.name}</h3>
                     <p className="text-sm text-muted-foreground mb-4 line-clamp-2">
-                      {product.description}
+                      {product.description || "Premium quartz surface"}
                     </p>
                     <div className="flex gap-2">
                       <Button asChild size="sm" className="flex-1">
@@ -297,8 +296,8 @@ const Home = () => {
               ))}
             </div>
           ) : (
-            <Card className="p-12 text-center bg-card/95 backdrop-blur-sm">
-              <p className="text-muted-foreground">No featured products yet. Check back soon!</p>
+            <Card className="p-12 text-center bg-card border">
+              <p className="text-muted-foreground">No products yet. Check back soon!</p>
             </Card>
           )}
         </div>
@@ -332,56 +331,62 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Testimonials Preview */}
+      {/* What Our Clients Say */}
       {testimonials && testimonials.length > 0 && (
-        <section className="py-20 relative overflow-hidden">
-          <ParallaxBackgroundSubtle imageSrc={bgTestimonials} overlay="bg-background/92" speed={0.2} />
+        <section className="py-20 relative overflow-hidden bg-muted/50">
           <div className="container relative z-10">
             <div className="text-center mb-12">
-              <h2 className="text-3xl font-display font-bold text-foreground mb-4">
+              <h2 className="text-3xl md:text-4xl font-display font-bold text-foreground mb-3">
                 What Our Clients Say
               </h2>
-              <p className="text-muted-foreground">
-                Don't just take our word for it.
+              <p className="text-muted-foreground text-lg max-w-xl mx-auto">
+                Don't just take our word for it — hear from those we've worked with.
               </p>
             </div>
-            <div className="grid md:grid-cols-3 gap-6">
+            <div className="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto">
               {testimonials.slice(0, 3).map((testimonial) => (
-                <Card key={testimonial.id} className="p-6 bg-card/95 backdrop-blur-sm">
-                  <div className="flex gap-1 mb-4">
-                    {[...Array(testimonial.rating || 5)].map((_, i) => (
-                      <svg key={i} className="h-5 w-5 text-secondary fill-secondary" viewBox="0 0 20 20">
-                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                      </svg>
-                    ))}
-                  </div>
-                  <p className="text-muted-foreground mb-4 italic">"{testimonial.content}"</p>
-                  <div className="flex items-center gap-3">
-                    {testimonial.image_url ? (
-                      <img
-                        src={testimonial.image_url}
-                        alt={testimonial.name}
-                        className="h-10 w-10 rounded-full object-cover"
-                      />
-                    ) : (
-                      <div className="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center">
-                        <span className="text-primary font-semibold">
-                          {testimonial.name.charAt(0)}
-                        </span>
-                      </div>
-                    )}
-                    <div>
-                      <p className="font-medium">{testimonial.name}</p>
-                      {testimonial.company && (
-                        <p className="text-sm text-muted-foreground">{testimonial.company}</p>
-                      )}
+                <Card
+                  key={testimonial.id}
+                  className="flex flex-col bg-card border shadow-sm hover:shadow-md transition-shadow overflow-hidden"
+                >
+                  <CardContent className="p-6 flex flex-col flex-1">
+                    <div className="flex gap-1 mb-4">
+                      {[...Array(testimonial.rating || 5)].map((_, i) => (
+                        <svg key={i} className="h-5 w-5 text-amber-500 fill-amber-500 shrink-0" viewBox="0 0 20 20">
+                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                      ))}
                     </div>
-                  </div>
+                    <p className="text-muted-foreground mb-6 text-sm leading-relaxed flex-1">
+                      "{testimonial.content}"
+                    </p>
+                    <div className="flex items-center gap-3 pt-4 border-t">
+                      {testimonial.image_url ? (
+                        <img
+                          src={testimonial.image_url}
+                          alt={testimonial.name}
+                          className="h-11 w-11 rounded-full object-cover"
+                        />
+                      ) : (
+                        <div className="h-11 w-11 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
+                          <span className="text-primary font-semibold text-sm">
+                            {testimonial.name.charAt(0)}
+                          </span>
+                        </div>
+                      )}
+                      <div className="min-w-0">
+                        <p className="font-medium text-foreground truncate">{testimonial.name}</p>
+                        {testimonial.company && (
+                          <p className="text-xs text-muted-foreground truncate">{testimonial.company}</p>
+                        )}
+                      </div>
+                    </div>
+                  </CardContent>
                 </Card>
               ))}
             </div>
-            <div className="text-center mt-8">
-              <Button asChild variant="outline" className="bg-card/80 backdrop-blur-sm">
+            <div className="text-center mt-10">
+              <Button asChild variant="outline" size="lg" className="border-2 border-primary text-primary hover:bg-primary hover:text-primary-foreground">
                 <Link to="/testimonials">View All Testimonials</Link>
               </Button>
             </div>

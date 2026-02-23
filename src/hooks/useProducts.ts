@@ -24,7 +24,11 @@ export interface Product {
   images?: string[];
   youtube_url?: string;
   pdf_url?: string;
+  test_report_url?: string;
   whatsapp_message?: string;
+  mine_name?: string;
+  actual_price?: string;
+  offer_price?: string;
   is_featured: boolean;
   display_order: number;
   created_at: Date;
@@ -40,45 +44,49 @@ export interface ProductInput {
   images?: string[];
   youtube_url?: string;
   pdf_url?: string;
+  test_report_url?: string;
   whatsapp_message?: string;
+  mine_name?: string;
+  actual_price?: string;
+  offer_price?: string;
   is_featured?: boolean;
   display_order?: number;
 }
 
-const getCategoryName = async (categoryId: string | null | undefined): Promise<string | undefined> => {
-  if (!categoryId) return undefined;
-  try {
-    const categoryDoc = await getDoc(doc(db, "product_categories", categoryId));
-    return categoryDoc.data()?.name;
-  } catch {
-    return undefined;
-  }
+/** Batch-fetch all category names (one read instead of N) */
+const getCategoryNameMap = async (): Promise<Map<string, string>> => {
+  const categoriesRef = collection(db, "product_categories");
+  const snapshot = await getDocs(categoriesRef);
+  const map = new Map<string, string>();
+  snapshot.docs.forEach((d) => {
+    const name = d.data()?.name;
+    if (name) map.set(d.id, name);
+  });
+  return map;
 };
 
 export const useProducts = () => {
   return useQuery({
     queryKey: ["products"],
     queryFn: async () => {
-      const productsRef = collection(db, "products");
-      const q = query(productsRef, orderBy("display_order", "asc"));
-      const querySnapshot = await getDocs(q);
-      
-      const products = await Promise.all(
-        querySnapshot.docs.map(async (docSnap) => {
-          const data = docSnap.data();
-          const categoryName = await getCategoryName(data.category_id);
-          return {
-            id: docSnap.id,
-            ...data,
-            product_categories: categoryName ? { name: categoryName } : undefined,
-            created_at: data.created_at?.toDate() || new Date(),
-            updated_at: data.updated_at?.toDate() || new Date(),
-          };
-        })
-      );
-      
-      return products as Product[];
+      const [productsSnapshot, categoryMap] = await Promise.all([
+        getDocs(query(collection(db, "products"), orderBy("display_order", "asc"))),
+        getCategoryNameMap(),
+      ]);
+
+      return productsSnapshot.docs.map((docSnap) => {
+        const data = docSnap.data();
+        const categoryName = data.category_id ? categoryMap.get(data.category_id) : undefined;
+        return {
+          id: docSnap.id,
+          ...data,
+          product_categories: categoryName ? { name: categoryName } : undefined,
+          created_at: data.created_at?.toDate() || new Date(),
+          updated_at: data.updated_at?.toDate() || new Date(),
+        };
+      }) as Product[];
     },
+    staleTime: 2 * 60 * 1000, // 2 minutes – products load from cache when revisiting
   });
 };
 
@@ -86,12 +94,15 @@ export const useProduct = (id: string) => {
   return useQuery({
     queryKey: ["products", id],
     queryFn: async () => {
-      const productDoc = await getDoc(doc(db, "products", id));
+      const [productDoc, categoryMap] = await Promise.all([
+        getDoc(doc(db, "products", id)),
+        getCategoryNameMap(),
+      ]);
       if (!productDoc.exists()) throw new Error("Product not found");
-      
+
       const data = productDoc.data();
-      const categoryName = await getCategoryName(data.category_id);
-      
+      const categoryName = data.category_id ? categoryMap.get(data.category_id) : undefined;
+
       return {
         id: productDoc.id,
         ...data,
@@ -101,6 +112,7 @@ export const useProduct = (id: string) => {
       } as Product;
     },
     enabled: !!id,
+    staleTime: 2 * 60 * 1000,
   });
 };
 
@@ -108,31 +120,31 @@ export const useFeaturedProducts = () => {
   return useQuery({
     queryKey: ["products", "featured"],
     queryFn: async () => {
-      const productsRef = collection(db, "products");
-      const q = query(
-        productsRef, 
-        where("is_featured", "==", true),
-        orderBy("display_order", "asc"),
-        limit(6)
-      );
-      const querySnapshot = await getDocs(q);
-      
-      const products = await Promise.all(
-        querySnapshot.docs.map(async (docSnap) => {
-          const data = docSnap.data();
-          const categoryName = await getCategoryName(data.category_id);
-          return {
-            id: docSnap.id,
-            ...data,
-            product_categories: categoryName ? { name: categoryName } : undefined,
-            created_at: data.created_at?.toDate() || new Date(),
-            updated_at: data.updated_at?.toDate() || new Date(),
-          };
-        })
-      );
-      
-      return products as Product[];
+      const [querySnapshot, categoryMap] = await Promise.all([
+        getDocs(
+          query(
+            collection(db, "products"),
+            where("is_featured", "==", true),
+            orderBy("display_order", "asc"),
+            limit(6)
+          )
+        ),
+        getCategoryNameMap(),
+      ]);
+
+      return querySnapshot.docs.map((docSnap) => {
+        const data = docSnap.data();
+        const categoryName = data.category_id ? categoryMap.get(data.category_id) : undefined;
+        return {
+          id: docSnap.id,
+          ...data,
+          product_categories: categoryName ? { name: categoryName } : undefined,
+          created_at: data.created_at?.toDate() || new Date(),
+          updated_at: data.updated_at?.toDate() || new Date(),
+        };
+      }) as Product[];
     },
+    staleTime: 2 * 60 * 1000,
   });
 };
 
@@ -152,8 +164,9 @@ export const useCreateProduct = () => {
       
       const docSnap = await getDoc(docRef);
       const data = docSnap.data();
-      const categoryName = await getCategoryName(data?.category_id);
-      
+      const categoryMap = await getCategoryNameMap();
+      const categoryName = data?.category_id ? categoryMap.get(data.category_id) : undefined;
+
       return {
         id: docRef.id,
         ...data,
@@ -181,8 +194,9 @@ export const useUpdateProduct = () => {
       
       const updatedDoc = await getDoc(productRef);
       const data = updatedDoc.data();
-      const categoryName = await getCategoryName(data?.category_id);
-      
+      const categoryMap = await getCategoryNameMap();
+      const categoryName = data?.category_id ? categoryMap.get(data.category_id) : undefined;
+
       return {
         id,
         ...data,

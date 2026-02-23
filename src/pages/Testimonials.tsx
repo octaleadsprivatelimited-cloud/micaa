@@ -1,9 +1,5 @@
 import { Card } from "@/components/ui/card";
-import { ParallaxBackground, ParallaxBackgroundSubtle } from "@/components/ui/parallax-background";
 import { useTestimonials } from "@/hooks/useTestimonials";
-
-// Background images
-import bgTestimonials from "@/assets/bg-testimonials.webp";
 
 const Testimonials = () => {
   const { data: testimonials, isLoading } = useTestimonials();
@@ -11,21 +7,20 @@ const Testimonials = () => {
   return (
     <div className="flex flex-col">
       {/* Hero Section */}
-      <section className="py-16 relative overflow-hidden">
-        <ParallaxBackground imageSrc={bgTestimonials} overlay="bg-primary/80" speed={0.3} />
-        <div className="container relative z-10 text-primary-foreground">
+      <section className="py-16 relative overflow-hidden bg-gradient-to-br from-primary via-primary/95 to-primary/90 text-primary-foreground">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_0%,hsl(var(--primary-foreground)/0.08),transparent)]" />
+        <div className="container relative z-10">
           <h1 className="text-4xl md:text-5xl font-display font-bold mb-4">
             Customer Testimonials
           </h1>
-          <p className="text-xl text-primary-foreground/80 max-w-2xl">
+          <p className="text-xl text-primary-foreground/90 max-w-2xl">
             See what our satisfied customers have to say about their experience with us.
           </p>
         </div>
       </section>
 
       {/* Testimonials Grid */}
-      <section className="py-16 relative overflow-hidden">
-        <ParallaxBackgroundSubtle imageSrc={bgTestimonials} overlay="bg-background/95" speed={0.15} />
+      <section className="py-16 relative overflow-hidden bg-gradient-to-b from-background to-muted/20">
         <div className="container relative z-10">
           {isLoading ? (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">

@@ -159,14 +159,6 @@ const Footer = () => {
                   Privacy Policy
                 </Link>
               </li>
-              <li>
-                <Link
-                  to="/admin"
-                  className="text-sm text-primary-foreground/80 hover:text-secondary transition-colors"
-                >
-                  Admin Login
-                </Link>
-              </li>
             </ul>
           </CollapsibleSection>
 

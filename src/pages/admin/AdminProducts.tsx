@@ -51,7 +51,11 @@ const AdminProducts = () => {
     images: [] as string[],
     youtube_url: "",
     pdf_url: "",
+    test_report_url: "",
     whatsapp_message: "",
+    mine_name: "",
+    actual_price: "",
+    offer_price: "",
     is_featured: false,
     display_order: 0,
   });
@@ -67,7 +71,11 @@ const AdminProducts = () => {
       images: [],
       youtube_url: "",
       pdf_url: "",
+      test_report_url: "",
       whatsapp_message: "",
+      mine_name: "",
+      actual_price: "",
+      offer_price: "",
       is_featured: false,
       display_order: 0,
     });
@@ -86,7 +94,11 @@ const AdminProducts = () => {
         images: product.images || [],
         youtube_url: product.youtube_url || "",
         pdf_url: product.pdf_url || "",
+        test_report_url: product.test_report_url || "",
         whatsapp_message: product.whatsapp_message || "",
+        mine_name: product.mine_name || "",
+        actual_price: product.actual_price || "",
+        offer_price: product.offer_price || "",
         is_featured: product.is_featured || false,
         display_order: product.display_order || 0,
       });
@@ -181,6 +193,7 @@ const AdminProducts = () => {
       images: formData.images,
       youtube_url: formData.youtube_url,
       pdf_url: formData.pdf_url,
+      test_report_url: formData.test_report_url,
       whatsapp_message: formData.whatsapp_message,
     });
 
@@ -397,6 +410,47 @@ const AdminProducts = () => {
                   onChange={(e) => setFormData({ ...formData, pdf_url: e.target.value })}
                   placeholder="https://drive.google.com/..."
                 />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="test_report_url">Test Report URL (Google Drive)</Label>
+                <Input
+                  id="test_report_url"
+                  value={formData.test_report_url}
+                  onChange={(e) => setFormData({ ...formData, test_report_url: e.target.value })}
+                  placeholder="https://drive.google.com/..."
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="mine_name">Mine Name</Label>
+                <Input
+                  id="mine_name"
+                  value={formData.mine_name}
+                  onChange={(e) => setFormData({ ...formData, mine_name: e.target.value })}
+                  placeholder="e.g. Mine A, Location"
+                />
+              </div>
+
+              <div className="grid sm:grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="actual_price">Actual Price</Label>
+                  <Input
+                    id="actual_price"
+                    value={formData.actual_price}
+                    onChange={(e) => setFormData({ ...formData, actual_price: e.target.value })}
+                    placeholder="e.g. ₹XXX per unit"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="offer_price">Offer Price</Label>
+                  <Input
+                    id="offer_price"
+                    value={formData.offer_price}
+                    onChange={(e) => setFormData({ ...formData, offer_price: e.target.value })}
+                    placeholder="e.g. ₹XXX per unit"
+                  />
+                </div>
               </div>
 
               <div className="space-y-2">

@@ -2,11 +2,7 @@ import { useState } from "react";
 import { X } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { ParallaxBackground, ParallaxBackgroundSubtle } from "@/components/ui/parallax-background";
 import { useGallery } from "@/hooks/useGallery";
-
-// Background images
-import bgGallery from "@/assets/bg-gallery.webp";
 
 const Gallery = () => {
   const { data: images, isLoading } = useGallery();
@@ -15,21 +11,20 @@ const Gallery = () => {
   return (
     <div className="flex flex-col">
       {/* Hero Section */}
-      <section className="py-16 relative overflow-hidden">
-        <ParallaxBackground imageSrc={bgGallery} overlay="bg-primary/80" speed={0.3} />
-        <div className="container relative z-10 text-primary-foreground">
+      <section className="py-16 relative overflow-hidden bg-gradient-to-br from-primary via-primary/95 to-primary/90 text-primary-foreground">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_0%,hsl(var(--primary-foreground)/0.08),transparent)]" />
+        <div className="container relative z-10">
           <h1 className="text-4xl md:text-5xl font-display font-bold mb-4">
             Gallery
           </h1>
-          <p className="text-xl text-primary-foreground/80 max-w-2xl">
+          <p className="text-xl text-primary-foreground/90 max-w-2xl">
             Explore our stunning quartz installations and get inspired for your next project.
           </p>
         </div>
       </section>
 
       {/* Gallery Grid */}
-      <section className="py-12 relative overflow-hidden">
-        <ParallaxBackgroundSubtle imageSrc={bgGallery} overlay="bg-background/95" speed={0.15} />
+      <section className="py-12 relative overflow-hidden bg-gradient-to-b from-background to-muted/20">
         <div className="container relative z-10">
           {isLoading ? (
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">

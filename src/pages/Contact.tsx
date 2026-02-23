@@ -13,13 +13,10 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { ParallaxBackground } from "@/components/ui/parallax-background";
 import { useToast } from "@/hooks/use-toast";
 import { z } from "zod";
 import { COMPANY_INFO, getWhatsAppLink, COUNTRIES } from "@/lib/constants";
 import { submitQuartzInquiry, type QuartzInquiryPayload } from "@/lib/inquiryService";
-
-import bgContact from "@/assets/bg-contact.webp";
 
 // --- Form state types (all sections) ---
 type BuyerDetails = {
@@ -416,13 +413,13 @@ const Contact = () => {
 
   return (
     <div className="flex flex-col">
-      <section className="py-16 relative overflow-hidden">
-        <ParallaxBackground imageSrc={bgContact} overlay="bg-primary/80" speed={0.3} />
-        <div className="container relative z-10 text-primary-foreground">
+      <section className="py-16 relative overflow-hidden bg-gradient-to-br from-primary via-primary/95 to-primary/90 text-primary-foreground">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_0%,hsl(var(--primary-foreground)/0.08),transparent)]" />
+        <div className="container relative z-10">
           <h1 className="text-4xl md:text-5xl font-display font-bold mb-4">
             Quartz Requirement Inquiry
           </h1>
-          <p className="text-xl text-primary-foreground/80 max-w-2xl">
+          <p className="text-xl text-primary-foreground/90 max-w-2xl">
             For export and industrial buyers. Submit your requirements and we will respond promptly.
           </p>
         </div>

@@ -17,6 +17,7 @@ export interface Service {
   title: string;
   description?: string;
   icon?: string;
+  features?: string[];
   display_order: number;
   created_at: Date;
   updated_at: Date;

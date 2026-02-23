@@ -1,11 +1,7 @@
 import { Link } from "react-router-dom";
 import { format } from "date-fns";
 import { Card, CardContent } from "@/components/ui/card";
-import { ParallaxBackground, ParallaxBackgroundSubtle } from "@/components/ui/parallax-background";
 import { useBlogPosts } from "@/hooks/useBlogPosts";
-
-// Background images
-import bgBlog from "@/assets/bg-blog.webp";
 
 const Blog = () => {
   const { data: posts, isLoading } = useBlogPosts();
@@ -13,21 +9,20 @@ const Blog = () => {
   return (
     <div className="flex flex-col">
       {/* Hero Section */}
-      <section className="py-16 relative overflow-hidden">
-        <ParallaxBackground imageSrc={bgBlog} overlay="bg-primary/80" speed={0.3} />
-        <div className="container relative z-10 text-primary-foreground">
+      <section className="py-16 relative overflow-hidden bg-gradient-to-br from-primary via-primary/95 to-primary/90 text-primary-foreground">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_0%,hsl(var(--primary-foreground)/0.08),transparent)]" />
+        <div className="container relative z-10">
           <h1 className="text-4xl md:text-5xl font-display font-bold mb-4">
             Blog & News
           </h1>
-          <p className="text-xl text-primary-foreground/80 max-w-2xl">
+          <p className="text-xl text-primary-foreground/90 max-w-2xl">
             Stay updated with the latest trends, tips, and news from the world of quartz surfaces.
           </p>
         </div>
       </section>
 
       {/* Blog Grid */}
-      <section className="py-16 relative overflow-hidden">
-        <ParallaxBackgroundSubtle imageSrc={bgBlog} overlay="bg-background/97" speed={0.1} />
+      <section className="py-16 relative overflow-hidden bg-gradient-to-b from-background to-muted/20">
         <div className="container relative z-10">
           {isLoading ? (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">

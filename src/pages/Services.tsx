@@ -1,13 +1,22 @@
 import { Link } from "react-router-dom";
-import { Ruler, Truck, Wrench, Palette, ShieldCheck, Clock } from "lucide-react";
+import {
+  Ruler,
+  Truck,
+  Wrench,
+  Palette,
+  ShieldCheck,
+  Clock,
+  Package,
+  Award,
+  Gem,
+  Building,
+  FileCheck,
+  Headphones,
+  Leaf,
+} from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { ParallaxBackground, ParallaxBackgroundSubtle } from "@/components/ui/parallax-background";
 import { useServices } from "@/hooks/useServices";
-
-// Background images
-import bgServices from "@/assets/bg-services.webp";
-import bgCta from "@/assets/bg-cta.webp";
 
 const iconMap: { [key: string]: any } = {
   Ruler,
@@ -16,6 +25,13 @@ const iconMap: { [key: string]: any } = {
   Palette,
   ShieldCheck,
   Clock,
+  Package,
+  Award,
+  Gem,
+  Building,
+  FileCheck,
+  Headphones,
+  Leaf,
 };
 
 const defaultServices = [
@@ -55,6 +71,48 @@ const defaultServices = [
     description: "Continued support and maintenance guidance post-installation.",
     features: ["Warranty service", "Care instructions", "Repair support", "Replacement parts"],
   },
+  {
+    icon: "Package",
+    title: "Samples & Showroom",
+    description: "View and order samples before you decide. Visit our showroom for a hands-on experience.",
+    features: ["Sample kits", "Showroom visits", "Material swatches", "Comparison guides"],
+  },
+  {
+    icon: "FileCheck",
+    title: "Export & Documentation",
+    description: "Full export support and documentation for international and industrial buyers.",
+    features: ["Export documentation", "Customs support", "Certificates of origin", "Quality certificates"],
+  },
+  {
+    icon: "Gem",
+    title: "Raw & Processed Quartz",
+    description: "Supply of raw quartz, lumps, grits, powder, and processed grades for industrial use.",
+    features: ["Raw quartz", "Lumps & grits", "Powder & HPQ", "Snow white & specialty grades"],
+  },
+  {
+    icon: "Headphones",
+    title: "Technical Support",
+    description: "Dedicated support for product specifications, usage, and troubleshooting.",
+    features: ["Product specifications", "Usage guidance", "Technical queries", "Application advice"],
+  },
+  {
+    icon: "Building",
+    title: "Bulk & Project Supply",
+    description: "Large-volume supply for projects, contractors, and commercial applications.",
+    features: ["Bulk pricing", "Project timelines", "Dedicated coordination", "Volume discounts"],
+  },
+  {
+    icon: "Award",
+    title: "Certification & Compliance",
+    description: "Quality certifications and compliance documentation for your requirements.",
+    features: ["Quality certifications", "Test reports", "Compliance docs", "Sustainability info"],
+  },
+  {
+    icon: "Leaf",
+    title: "Sustainability",
+    description: "Environmentally conscious sourcing and processes where applicable.",
+    features: ["Responsible sourcing", "Efficiency practices", "Recyclability info", "Environmental compliance"],
+  },
 ];
 
 const Services = () => {
@@ -65,21 +123,20 @@ const Services = () => {
   return (
     <div className="flex flex-col">
       {/* Hero Section */}
-      <section className="py-16 relative overflow-hidden">
-        <ParallaxBackground imageSrc={bgServices} overlay="bg-primary/80" speed={0.3} />
-        <div className="container relative z-10 text-primary-foreground">
+      <section className="py-16 relative overflow-hidden bg-gradient-to-br from-primary via-primary/95 to-primary/90 text-primary-foreground">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_0%,hsl(var(--primary-foreground)/0.08),transparent)]" />
+        <div className="container relative z-10">
           <h1 className="text-4xl md:text-5xl font-display font-bold mb-4">
             Our Services
           </h1>
-          <p className="text-xl text-primary-foreground/80 max-w-2xl">
+          <p className="text-xl text-primary-foreground/90 max-w-2xl">
             Comprehensive solutions from selection to installation, ensuring your complete satisfaction.
           </p>
         </div>
       </section>
 
       {/* Services Grid */}
-      <section className="py-16 relative overflow-hidden">
-        <ParallaxBackgroundSubtle imageSrc={bgServices} overlay="bg-background/95" speed={0.15} />
+      <section className="py-16 relative overflow-hidden bg-gradient-to-b from-background to-muted/20">
         <div className="container relative z-10">
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {(displayServices || defaultServices).map((service, index) => {
@@ -115,8 +172,7 @@ const Services = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-16 relative overflow-hidden">
-        <ParallaxBackgroundSubtle imageSrc={bgCta} overlay="bg-muted/90" speed={0.2} />
+      <section className="py-16 relative overflow-hidden bg-muted/50">
         <div className="container relative z-10 text-center">
           <h2 className="text-3xl font-display font-bold mb-4">Need a Custom Solution?</h2>
           <p className="text-muted-foreground mb-8 max-w-2xl mx-auto">
