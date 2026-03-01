@@ -1,6 +1,6 @@
 /**
  * Currency detection and formatting by country.
- * Detects user region (India → INR, US → USD) and formats prices accordingly.
+ * India → INR (rupees). All other countries → USD (dollars).
  */
 
 export type CurrencyCode = "INR" | "USD";
@@ -15,28 +15,26 @@ const RATES: Record<string, number> = {
 
 /**
  * Detect user's currency from browser timezone and locale.
- * India (Asia/Kolkata) → INR, United States → USD, default → INR.
+ * India only → INR. All other countries (and unknown) → USD.
  */
 export function getUserCurrency(): CurrencyCode {
-  if (typeof Intl === "undefined") return "INR";
+  if (typeof Intl === "undefined") return "USD";
 
   try {
     const tz = Intl.DateTimeFormat().resolvedOptions().timeZone || "";
-    if (tz.startsWith("America/") || tz === "US/Pacific" || tz === "US/Eastern" || tz === "US/Central" || tz === "US/Mountain") {
-      return "USD";
-    }
     if (tz.startsWith("Asia/Kolkata") || tz === "Asia/Calcutta") {
       return "INR";
     }
 
     const locale = navigator.language || (navigator as any).userLanguage || "";
-    if (locale.endsWith("-US") || locale === "en-US") return "USD";
-    if (locale.endsWith("-IN") || locale === "en-IN") return "INR";
+    if (locale.endsWith("-IN") || locale === "en-IN") {
+      return "INR";
+    }
   } catch {
     // ignore
   }
 
-  return "INR";
+  return "USD";
 }
 
 /**
