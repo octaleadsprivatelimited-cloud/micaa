@@ -9,6 +9,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { useProduct } from "@/hooks/useProducts";
+import { useCurrency } from "@/contexts/CurrencyContext";
 import {
   getWhatsAppLink,
   PAYMENT_TERMS_OPTIONS,
@@ -18,6 +19,7 @@ import {
 const ProductDetail = () => {
   const { id } = useParams<{ id: string }>();
   const { data: product, isLoading, error } = useProduct(id || "");
+  const { formatPrice } = useCurrency();
 
   if (isLoading) {
     return (
@@ -117,13 +119,13 @@ const ProductDetail = () => {
                   {product.actual_price && (
                     <div>
                       <span className="text-muted-foreground">Actual price: </span>
-                      <span className="font-semibold">{product.actual_price}</span>
+                      <span className="font-semibold">{formatPrice(product.actual_price)}</span>
                     </div>
                   )}
                   {product.offer_price && (
                     <div>
                       <span className="text-muted-foreground">Offer price: </span>
-                      <span className="font-semibold text-primary">{product.offer_price}</span>
+                      <span className="font-semibold text-primary">{formatPrice(product.offer_price)}</span>
                     </div>
                   )}
                 </div>

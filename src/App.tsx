@@ -5,6 +5,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "@/contexts/AuthContext";
+import { CurrencyProvider } from "@/contexts/CurrencyContext";
 import MainLayout from "@/components/layout/MainLayout";
 import ProtectedRoute from "@/components/admin/ProtectedRoute";
 import AdminLayout from "@/components/admin/AdminLayout";
@@ -55,6 +56,7 @@ const App = () => {
               v7_relativeSplatPath: true,
             }}
           >
+            <CurrencyProvider>
             <Routes>
               {/* Public Routes */}
               <Route element={<MainLayout />}>
@@ -90,6 +92,7 @@ const App = () => {
               {/* 404 */}
               <Route path="*" element={<NotFound />} />
             </Routes>
+            </CurrencyProvider>
           </BrowserRouter>
         </TooltipProvider>
       </AuthProvider>

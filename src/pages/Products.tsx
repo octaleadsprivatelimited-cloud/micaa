@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/popover";
 import { useProducts } from "@/hooks/useProducts";
 import { useCategories } from "@/hooks/useCategories";
+import { useCurrency } from "@/contexts/CurrencyContext";
 import {
   getWhatsAppLink,
   PAYMENT_TERMS_OPTIONS,
@@ -24,6 +25,7 @@ const Products = () => {
 
   const { data: products, isLoading: productsLoading } = useProducts();
   const { data: categories } = useCategories();
+  const { formatPrice } = useCurrency();
 
   const filteredProducts = products?.filter((product) => {
     const matchesSearch = product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -139,12 +141,12 @@ const Products = () => {
                         <div className="flex flex-wrap gap-2 text-sm mb-3">
                           {product.actual_price && (
                             <span className="text-muted-foreground">
-                              Price: <span className="font-medium text-foreground">{product.actual_price}</span>
+                              Price: <span className="font-medium text-foreground">{formatPrice(product.actual_price)}</span>
                             </span>
                           )}
                           {product.offer_price && (
                             <span className="text-primary font-medium">
-                              Offer: {product.offer_price}
+                              Offer: {formatPrice(product.offer_price)}
                             </span>
                           )}
                         </div>
