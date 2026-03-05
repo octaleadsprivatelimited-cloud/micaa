@@ -1,13 +1,23 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { ArrowRight, Award, Shield, Sparkles, ChevronRight, ChevronLeft } from "lucide-react";
+import { ArrowRight, Award, Shield, Sparkles, ChevronRight, ChevronLeft, ChevronDown } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import { ParallaxBackground, ParallaxBackgroundSubtle } from "@/components/ui/parallax-background";
 import { useProducts } from "@/hooks/useProducts";
 import { useTestimonials } from "@/hooks/useTestimonials";
-import { COMPANY_INFO, getProductWhatsAppMessage, getWhatsAppLink } from "@/lib/constants";
+import {
+  COMPANY_INFO,
+  getWhatsAppLink,
+  PAYMENT_TERMS_OPTIONS,
+  getProductEnquiryWhatsAppMessage,
+} from "@/lib/constants";
 
 // Hero images
 import heroQuartz1 from "@/assets/hero-quartz-1.webp";
@@ -276,20 +286,36 @@ const Home = () => {
                       <Button asChild size="sm" className="flex-1">
                         <Link to={`/products/${product.id}`}>View Details</Link>
                       </Button>
-                      <Button
-                        asChild
-                        size="sm"
-                        variant="outline"
-                        className="bg-[#25D366] border-[#25D366] text-white hover:bg-[#128C7E]"
-                      >
-                        <a
-                          href={getWhatsAppLink(getProductWhatsAppMessage(product.name))}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
-                          Enquire
-                        </a>
-                      </Button>
+                      <Popover>
+                        <PopoverTrigger asChild>
+                          <Button
+                            size="sm"
+                            variant="outline"
+                            className="bg-[#25D366] border-[#25D366] text-white hover:bg-[#128C7E]"
+                          >
+                            Enquire
+                            <ChevronDown className="h-4 w-4 ml-1" />
+                          </Button>
+                        </PopoverTrigger>
+                        <PopoverContent className="w-56 p-2" align="end">
+                          <p className="text-xs font-medium text-muted-foreground mb-2 px-1">
+                            Payment terms
+                          </p>
+                          {PAYMENT_TERMS_OPTIONS.map((opt) => (
+                            <a
+                              key={opt.value}
+                              href={getWhatsAppLink(
+                                getProductEnquiryWhatsAppMessage(product.name, opt.label)
+                              )}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="block w-full text-left px-3 py-2 text-sm rounded-md hover:bg-muted transition-colors"
+                            >
+                              {opt.label}
+                            </a>
+                          ))}
+                        </PopoverContent>
+                      </Popover>
                     </div>
                   </CardContent>
                 </Card>
