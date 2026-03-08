@@ -1,8 +1,8 @@
 export const COMPANY_INFO = {
   name: "SVN EXIM",
   tagline: "Premium Quartz Surfaces",
-  phone: "+91 8639132193",
-  whatsapp: "+918639132193",
+  phone: "+91 9063715459",
+  whatsapp: "+919063715459",
   email: "globalminerals@svnexim.in",
   address: "HOUSE NO: 345B, DOOR NO: 26-10/1/1208, WARD NO: 26, GROUND FLOOR, PADARUPALLI, NELLORE, SPSR NELLORE, ANDHRA PRADESH - 524004.",
   socialLinks: {
