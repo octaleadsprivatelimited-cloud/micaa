@@ -158,6 +158,9 @@ const AdminBlog = () => {
     try {
       await updatePost.mutateAsync({
         id: post.id,
+        title: post.title,
+        slug: post.slug,
+        content: post.content,
         is_published: !post.is_published,
         published_at: !post.is_published ? new Date() : null,
       });
