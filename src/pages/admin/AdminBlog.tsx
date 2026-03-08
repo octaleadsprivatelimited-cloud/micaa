@@ -117,7 +117,7 @@ const AdminBlog = () => {
     try {
       const postData = {
         ...formData,
-        published_at: formData.is_published ? new Date().toISOString() : null,
+        published_at: formData.is_published ? new Date() : null,
       };
 
       if (editingPost) {
@@ -159,7 +159,7 @@ const AdminBlog = () => {
       await updatePost.mutateAsync({
         id: post.id,
         is_published: !post.is_published,
-        published_at: !post.is_published ? new Date().toISOString() : null,
+        published_at: !post.is_published ? new Date() : null,
       });
       toast({
         title: post.is_published ? "Post unpublished" : "Post published",
