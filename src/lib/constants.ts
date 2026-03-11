@@ -3,7 +3,7 @@ export const COMPANY_INFO = {
   tagline: "Premium Quartz Surfaces",
   phone: "+91 9063715459",
   whatsapp: "+919063715459",
-  email: "globalminerals@svnexim.in",
+  email: "Info@svnexim.in",
   address: "HOUSE NO: 345B, DOOR NO: 26-10/1/1208, WARD NO: 26, GROUND FLOOR, PADARUPALLI, NELLORE, SPSR NELLORE, ANDHRA PRADESH - 524004.",
   socialLinks: {
     facebook: "https://facebook.com/svnexim",
